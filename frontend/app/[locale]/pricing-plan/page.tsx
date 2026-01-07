@@ -61,7 +61,7 @@ export default function PricingPlan() {
 										<h2>$250 <span>Early Bird</span></h2>
 										<div className="space8" />
 										<p style={{ fontSize: '14px', color: '#999', marginBottom: '15px' }}>
-											<strike>$270</strike>
+											<s>$270</s>
 										</p>
 										<ul>
 											<li><img src="/assets/img/icons/check2.svg" alt="" />Full Conference Access</li>
@@ -97,7 +97,7 @@ export default function PricingPlan() {
 										<h2>$385 <span>Early Bird</span></h2>
 										<div className="space8" />
 										<p style={{ fontSize: '14px', color: '#999', marginBottom: '15px' }}>
-											<strike>$400</strike>
+											<s>$400</s>
 										</p>
 										<ul>
 											<li><img src="/assets/img/icons/check2.svg" alt="" />Full Conference Access</li>

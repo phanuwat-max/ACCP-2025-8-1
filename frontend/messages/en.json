@@ -366,7 +366,14 @@
     "or": "or",
     "needHelp": "Need help?",
     "contactSupport": "Contact Support",
-    "subtitle": "Sign in to access your ACCP 2026 account"
+    "subtitle": "Sign in to access your ACCP 2026 account",
+    "internationalPharmacist": "International Pharmacist",
+    "internationalLogin": "International Pharmacist Login",
+    "tabs": {
+      "member": "Member",
+      "thaiPharmacist": "Thai Pharmacist",
+      "internationalPharmacist": "International Pharmacist"
+    }
   },
   "signup": {
     "pageTitle": "Sign Up",

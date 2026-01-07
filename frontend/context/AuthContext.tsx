@@ -6,7 +6,7 @@ interface User {
     lastName: string;
     email: string;
     country?: string;
-    delegateType: 'pharmacy_students' | 'all_delegate';
+    delegateType: 'pharmacy_students' | 'all_delegate' | 'foreign_delegates';
 }
 
 interface AuthContextType {

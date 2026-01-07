@@ -366,7 +366,14 @@
         "or": "หรือ",
         "needHelp": "ต้องการความช่วยเหลือ?",
         "contactSupport": "ติดต่อฝ่ายสนับสนุน",
-        "subtitle": "เข้าสู่ระบบเพื่อเข้าใช้งานบัญชี ACCP 2026 ของคุณ"
+        "subtitle": "เข้าสู่ระบบเพื่อเข้าใช้งานบัญชี ACCP 2026 ของคุณ",
+        "internationalPharmacist": "เภสัชกรต่างชาติ",
+        "internationalLogin": "เข้าสู่ระบบเภสัชกรต่างชาติ",
+        "tabs": {
+            "member": "สมาชิกทั่วไป",
+            "thaiPharmacist": "เภสัชกร",
+            "internationalPharmacist": "เภสัชกรต่างชาติ"
+        }
     },
     "signup": {
         "pageTitle": "สมัครสมาชิก",

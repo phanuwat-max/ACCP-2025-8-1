@@ -81,13 +81,24 @@ export default function AbstractSubmission() {
 
         // Calculate word count for abstract sections
         if (['background', 'methods', 'results', 'conclusions'].includes(name)) {
-            const totalWords = [
-                formData.background,
-                formData.methods,
-                formData.results,
-                formData.conclusions
-            ].join(' ').split(/\s+/).filter(word => word.length > 0).length
-            setWordCount(totalWords)
+            // Create updated form data with the new value
+            const updatedData = {
+                background: name === 'background' ? value : formData.background,
+                methods: name === 'methods' ? value : formData.methods,
+                results: name === 'results' ? value : formData.results,
+                conclusions: name === 'conclusions' ? value : formData.conclusions
+            }
+            
+            // Calculate total words from all sections
+            const totalText = [
+                updatedData.background,
+                updatedData.methods,
+                updatedData.results,
+                updatedData.conclusions
+            ].join(' ')
+            
+            const words = totalText.trim().split(/\s+/).filter(word => word.length > 0)
+            setWordCount(words.length)
         }
     }
 

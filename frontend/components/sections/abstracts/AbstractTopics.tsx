@@ -27,7 +27,14 @@ export default function AbstractTopics() {
                                         color: '#333',
                                         transition: 'all 0.3s ease'
                                     }}>
-                                        {topic}
+                                        <strong>{topic.title}</strong>
+                                        {topic.subtopics && topic.subtopics.length > 0 && (
+                                            <ul style={{ marginTop: '8px', marginLeft: '20px', fontSize: '14px', color: '#666' }}>
+                                                {topic.subtopics.map((subtopic, subIndex) => (
+                                                    <li key={subIndex}>{subtopic}</li>
+                                                ))}
+                                            </ul>
+                                        )}
                                     </li>
                                 ))}
                             </ul>

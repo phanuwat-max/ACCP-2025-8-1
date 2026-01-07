@@ -4,10 +4,12 @@ import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import FormInput from '@/components/common/FormInput';
+import Button from '@/components/common/Button';
 
 export default function LoginForm() {
     const t = useTranslations('login');
-    const [activeTab, setActiveTab] = useState<'member' | 'pharmacist'>('member');
+    const [activeTab, setActiveTab] = useState<'member' | 'pharmacist' | 'international'>('member');
     const locale = useLocale();
     const router = useRouter();
     const { login } = useAuth();
@@ -38,6 +40,12 @@ export default function LoginForm() {
                     setIsLoading(false);
                     return;
                 }
+            } else if (activeTab === 'international') {
+                if (!email || !password) {
+                    alert('Please fill in all fields');
+                    setIsLoading(false);
+                    return;
+                }
             }
 
             // Simulating API call for now (demo without backend)
@@ -48,8 +56,8 @@ export default function LoginForm() {
             const userData = {
                 firstName: activeTab === 'member' ? 'John' : 'Pharmacist',
                 lastName: activeTab === 'member' ? 'Doe' : 'User',
-                email: activeTab === 'member' ? email : `pharmacist_${licenseId}@accp.local`,
-                delegateType: activeTab === 'member' ? 'pharmacy_students' as const : 'all_delegate' as const
+                email: activeTab === 'member' || activeTab === 'international' ? email : `pharmacist_${licenseId}@accp.local`,
+                delegateType: activeTab === 'member' ? 'pharmacy_students' as const : (activeTab === 'international' ? 'foreign_delegates' as const : 'all_delegate' as const)
             };
             
             login(userData);
@@ -80,7 +88,7 @@ export default function LoginForm() {
                 left: 0,
                 right: 0,
                 height: '5px',
-                background: 'linear-gradient(90deg, #FFBA00 0%, #FFD54F 50%, #FFBA00 100%)'
+                background: 'linear-gradient(90deg, #00C853 0%, #69F0AE 50%, #00C853 100%)'
             }} />
 
             <div className="login-header text-center mb-4">
@@ -91,7 +99,8 @@ export default function LoginForm() {
                         style={{ height: '100px', width: 'auto', marginBottom: '20px' }} 
                     />
                 </Link>
-                <h3>{t('login')}</h3>
+                <h3>{t('pageTitle')}</h3>
+                <p style={{ color: '#666', fontSize: '14px' }}>{t('subtitle')}</p>
             </div>
 
             {/* Tab Selector */}
@@ -101,51 +110,77 @@ export default function LoginForm() {
                 marginBottom: '30px',
                 background: '#f5f5f5',
                 padding: '6px',
-                borderRadius: '12px'
+                borderRadius: '12px',
+                flexWrap: 'wrap'
             }}>
                 <button
                     onClick={() => setActiveTab('member')}
                     style={{
                         flex: 1,
-                        padding: '14px 16px',
+                        padding: '12px 10px',
                         border: 'none',
                         borderRadius: '10px',
                         background: activeTab === 'member' ? '#1a237e' : 'transparent',
                         color: activeTab === 'member' ? '#fff' : '#666',
-                        fontSize: '14px',
+                        fontSize: '13px',
                         fontWeight: '600',
                         cursor: 'pointer',
                         transition: 'all 0.3s ease',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: '8px'
+                        gap: '6px',
+                        minWidth: '100px'
                     }}
                 >
-                    <i className="fa-solid fa-user" style={{ fontSize: '16px' }} />
+                    <i className="fa-solid fa-user" style={{ fontSize: '14px' }} />
                     Member
                 </button>
                 <button
                     onClick={() => setActiveTab('pharmacist')}
                     style={{
                         flex: 1,
-                        padding: '14px 16px',
+                        padding: '12px 10px',
                         border: 'none',
                         borderRadius: '10px',
                         background: activeTab === 'pharmacist' ? '#00695c' : 'transparent',
                         color: activeTab === 'pharmacist' ? '#fff' : '#666',
-                        fontSize: '14px',
+                        fontSize: '13px',
                         fontWeight: '600',
                         cursor: 'pointer',
                         transition: 'all 0.3s ease',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: '8px'
+                        gap: '6px',
+                         minWidth: '100px'
                     }}
                 >
-                    <i className="fa-solid fa-user-doctor" style={{ fontSize: '16px' }} />
-                    {t('pharmacistLogin').replace('Login', '').replace('เข้าสู่ระบบ', '').trim()} {/* Just label 'Pharmacist' / 'เภสัชกร' */}
+                    <i className="fa-solid fa-user-doctor" style={{ fontSize: '14px' }} />
+                    {t('tabs.thaiPharmacist')}
+                </button>
+                <button
+                    onClick={() => setActiveTab('international')}
+                    style={{
+                        flex: 1,
+                        padding: '12px 10px',
+                        border: 'none',
+                        borderRadius: '10px',
+                        background: activeTab === 'international' ? '#FF6F00' : 'transparent',
+                        color: activeTab === 'international' ? '#fff' : '#666',
+                        fontSize: '13px',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                         minWidth: '140px'
+                    }}
+                >
+                    <i className="fa-solid fa-earth-americas" style={{ fontSize: '14px' }} />
+                     {t('tabs.internationalPharmacist')}
                 </button>
             </div>
 
@@ -162,65 +197,29 @@ export default function LoginForm() {
                         {t('memberLogin')}
                     </h3>
 
-                    <div style={{ marginBottom: '20px' }}>
-                        <label style={{
-                            display: 'block',
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            color: '#333',
-                            marginBottom: '8px'
-                        }}>
-                            <i className="fa-solid fa-envelope" style={{ marginRight: '8px', color: '#FFBA00' }} />
-                            {t('email')}
-                        </label>
-                        <input
-                            type="email"
-                            placeholder={t('email')}
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            style={{
-                                width: '100%',
-                                padding: '14px 18px',
-                                fontSize: '15px',
-                                border: '2px solid #e8e8e8',
-                                borderRadius: '10px',
-                                outline: 'none',
-                                transition: 'all 0.3s ease',
-                                background: '#fafafa'
-                            }}
-                        />
-                    </div>
+                    <FormInput
+                        label={t('email')}
+                        type="email"
+                        name="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder={t('email')}
+                        required
+                        icon="fa-solid fa-envelope"
+                        iconColor="#FFBA00"
+                    />
 
-                    <div style={{ marginBottom: '16px' }}>
-                        <label style={{
-                            display: 'block',
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            color: '#333',
-                            marginBottom: '8px'
-                        }}>
-                            <i className="fa-solid fa-lock" style={{ marginRight: '8px', color: '#FFBA00' }} />
-                            {t('password')}
-                        </label>
-                        <input
-                            type="password"
-                            placeholder={t('password')}
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            style={{
-                                width: '100%',
-                                padding: '14px 18px',
-                                fontSize: '15px',
-                                border: '2px solid #e8e8e8',
-                                borderRadius: '10px',
-                                outline: 'none',
-                                transition: 'all 0.3s ease',
-                                background: '#fafafa'
-                            }}
-                        />
-                    </div>
+                    <FormInput
+                        label={t('password')}
+                        type="password"
+                        name="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder={t('password')}
+                        required
+                        icon="fa-solid fa-lock"
+                        iconColor="#FFBA00"
+                    />
 
                     <div style={{
                         display: 'flex',
@@ -245,30 +244,15 @@ export default function LoginForm() {
                         </Link>
                     </div>
 
-                    <button
+                    <Button
                         type="submit"
-                        disabled={isLoading}
-                        style={{
-                            width: '100%',
-                            padding: '16px',
-                            background: isLoading ? '#ccc' : 'linear-gradient(135deg, #1a237e 0%, #3949ab 100%)',
-                            border: 'none',
-                            borderRadius: '10px',
-                            color: '#fff',
-                            fontSize: '16px',
-                            fontWeight: '700',
-                            cursor: isLoading ? 'not-allowed' : 'pointer',
-                            transition: 'all 0.3s ease',
-                            boxShadow: '0 8px 25px rgba(26, 35, 126, 0.3)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '10px'
-                        }}
+                        variant="primary"
+                        loading={isLoading}
+                        fullWidth
+                        icon="fa-solid fa-right-to-bracket"
                     >
-                        <i className="fa-solid fa-right-to-bracket" />
-                        {isLoading ? 'Loading...' : t('signIn')}
-                    </button>
+                        {t('signIn')}
+                    </Button>
                 </form>
             )}
 
@@ -448,6 +432,137 @@ export default function LoginForm() {
                             </span>
                         </p>
                     </div>
+                </form>
+            )}
+
+            {/* International Pharmacist Login Form */}
+            {activeTab === 'international' && (
+                <form onSubmit={handleSubmit}>
+                    <h3 style={{
+                        fontSize: '20px',
+                        fontWeight: '700',
+                        color: '#FF6F00',
+                        marginBottom: '20px',
+                        textAlign: 'center'
+                    }}>
+                        {t('internationalLogin')}
+                    </h3>
+                    <p style={{
+                        textAlign: 'center',
+                        color: '#666',
+                        fontSize: '13px',
+                        marginBottom: '20px'
+                    }}>
+                       Sign in with your email and password
+                    </p>
+
+                    <div style={{ marginBottom: '20px' }}>
+                        <label style={{
+                            display: 'block',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            color: '#333',
+                            marginBottom: '8px'
+                        }}>
+                            <i className="fa-solid fa-envelope" style={{ marginRight: '8px', color: '#FF6F00' }} />
+                            {t('email')}
+                        </label>
+                        <input
+                            type="email"
+                            placeholder={t('email')}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            style={{
+                                width: '100%',
+                                padding: '14px 18px',
+                                fontSize: '15px',
+                                border: '2px solid #e8e8e8',
+                                borderRadius: '10px',
+                                outline: 'none',
+                                transition: 'all 0.3s ease',
+                                background: '#fafafa'
+                            }}
+                        />
+                    </div>
+
+                    <div style={{ marginBottom: '16px' }}>
+                        <label style={{
+                            display: 'block',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            color: '#333',
+                            marginBottom: '8px'
+                        }}>
+                            <i className="fa-solid fa-lock" style={{ marginRight: '8px', color: '#FF6F00' }} />
+                            {t('password')}
+                        </label>
+                        <input
+                            type="password"
+                            placeholder={t('password')}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            style={{
+                                width: '100%',
+                                padding: '14px 18px',
+                                fontSize: '15px',
+                                border: '2px solid #e8e8e8',
+                                borderRadius: '10px',
+                                outline: 'none',
+                                transition: 'all 0.3s ease',
+                                background: '#fafafa'
+                            }}
+                        />
+                    </div>
+
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '20px'
+                    }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                            <input type="checkbox" style={{ width: '16px', height: '16px' }} />
+                            <span style={{ fontSize: '13px', color: '#666' }}>{t('rememberMe')}</span>
+                        </label>
+                        <Link
+                            href="/forgot-password"
+                            style={{
+                                color: '#1a237e',
+                                fontSize: '13px',
+                                fontWeight: '500',
+                                textDecoration: 'none'
+                            }}
+                        >
+                            {t('forgotPassword')}
+                        </Link>
+                    </div>
+
+                    <button
+                        type="submit"
+                        disabled={isLoading}
+                        style={{
+                            width: '100%',
+                            padding: '16px',
+                            background: isLoading ? '#ccc' : 'linear-gradient(135deg, #FF6F00 0%, #FFA000 100%)',
+                            border: 'none',
+                            borderRadius: '10px',
+                            color: '#fff',
+                            fontSize: '16px',
+                            fontWeight: '700',
+                            cursor: isLoading ? 'not-allowed' : 'pointer',
+                            transition: 'all 0.3s ease',
+                            boxShadow: '0 8px 25px rgba(255, 111, 0, 0.3)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '10px'
+                        }}
+                    >
+                        <i className="fa-solid fa-right-to-bracket" />
+                        {isLoading ? 'Loading...' : t('signIn')}
+                    </button>
                 </form>
             )}
 

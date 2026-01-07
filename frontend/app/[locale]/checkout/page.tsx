@@ -85,11 +85,18 @@ export default function Checkout() {
     if (!isAuthenticated) {
       router.push(`/${locale}/login`);
     } else {
-      const packageParam = searchParams.get("package") || "professional";
+      // International pharmacists (foreign_delegates) should always use professional package
+      let packageParam = searchParams.get("package") || "professional";
+      
+      // Override package selection for international pharmacists
+      if (user?.delegateType === 'foreign_delegates') {
+        packageParam = "professional";
+      }
+      
       setSelectedPackage(packageParam);
       setIsLoading(false);
     }
-  }, [isAuthenticated, router, locale, searchParams]);
+  }, [isAuthenticated, router, locale, searchParams, user]);
 
   // Calculate total price
   useEffect(() => {
