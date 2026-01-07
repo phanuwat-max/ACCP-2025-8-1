@@ -1,11 +1,12 @@
 'use client'
 import { useState } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 export default function SignupForm() {
     const t = useTranslations('signup');
     const tLogin = useTranslations('login');
+    const locale = useLocale();
     const [activeTab, setActiveTab] = useState<'member' | 'pharmacist'>('member');
 
     return (
@@ -27,13 +28,15 @@ export default function SignupForm() {
                 background: 'linear-gradient(90deg, #00C853 0%, #69F0AE 50%, #00C853 100%)'
             }} />
 
-            {/* Logo */}
-            <div className="text-center" style={{ marginBottom: '25px' }}>
-                <img
-                    src="/assets/img/logo/accp_logo.svg"
-                    alt="ACCP 2026"
-                    style={{ height: '70px', marginBottom: '15px' }}
-                />
+            <div className="login-header text-center mb-4">
+                <Link href={`/${locale}`}>
+                    <img
+                        src="/assets/img/logo/accp_logo_main.png"
+                        alt="ACCP 2026"
+                        style={{ height: '100px', width: 'auto', marginBottom: '20px' }}
+                    />
+                </Link>
+                <h3>{t('createAccount')}</h3>
             </div>
 
             {/* Tab Selector */}

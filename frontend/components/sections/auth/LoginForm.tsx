@@ -83,13 +83,15 @@ export default function LoginForm() {
                 background: 'linear-gradient(90deg, #FFBA00 0%, #FFD54F 50%, #FFBA00 100%)'
             }} />
 
-            {/* Logo */}
-            <div className="text-center" style={{ marginBottom: '25px' }}>
-                <img
-                    src="/assets/img/logo/accp_logo.svg"
-                    alt="ACCP 2026"
-                    style={{ height: '70px', marginBottom: '15px' }}
-                />
+            <div className="login-header text-center mb-4">
+                <Link href={`/${locale}`}>
+                    <img 
+                        src="/assets/img/logo/accp_logo_main.png" 
+                        alt="ACCP 2026" 
+                        style={{ height: '100px', width: 'auto', marginBottom: '20px' }} 
+                    />
+                </Link>
+                <h3>{t('login')}</h3>
             </div>
 
             {/* Tab Selector */}
