@@ -1,0 +1,718 @@
+{
+  "Event Summary": [
+    {
+      "The 25th ACCP (2026) — Event Summary": "Theme",
+      "__EMPTY": "Borderless Pharmacy Practice: The Collaboration for sustainability and Cultural Integration"
+    },
+    {
+      "The 25th ACCP (2026) — Event Summary": "Workshop Date",
+      "__EMPTY": "2026-07-09"
+    },
+    {
+      "The 25th ACCP (2026) — Event Summary": "Conference Dates",
+      "__EMPTY": "2026-07-10 – 2026-07-11"
+    },
+    {
+      "The 25th ACCP (2026) — Event Summary": "Venue",
+      "__EMPTY": "Centara Grand & Bangkok Convention Centre at CentralWorld"
+    },
+    {
+      "The 25th ACCP (2026) — Event Summary": "City",
+      "__EMPTY": "Bangkok"
+    },
+    {
+      "The 25th ACCP (2026) — Event Summary": "Country",
+      "__EMPTY": "Thailand"
+    },
+    {
+      "The 25th ACCP (2026) — Event Summary": "website hosting ",
+      "__EMPTY": "https://accp2026bangkok.pharmacycouncil.org"
+    },
+    {
+      "__EMPTY": "(example : https://pris.pharmacycouncil.org) "
+    },
+    {
+      "The 25th ACCP (2026) — Event Summary": "มี 3 module",
+      "__EMPTY": "landing page"
+    },
+    {
+      "__EMPTY": "abstract submission"
+    },
+    {
+      "__EMPTY": "registration and payment",
+      "__EMPTY_1": "payment gateway"
+    },
+    {
+      "__EMPTY": "ต้องมีตัว CI logo backdrop "
+    }
+  ],
+  "Sitemap": [
+    {
+      "ลำดับ": 1,
+      "Menu": "Home",
+      "Page Title": "ACCP 2026 — Borderless Pharmacy Practice: The Collaboration for sustainability and Cultural Integration",
+      "URL Slug": "home",
+      "Purpose": "Landing page with hero banner, dates, venue, CTAs.",
+      "Content Owner": "Web Lead",
+      "Priority": "P0",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": 2,
+      "Menu": "About ACCP",
+      "Page Title": "About ACCP",
+      "URL Slug": "about-accp",
+      "Purpose": "Introduce ACCP and mission; link to official ACCP.",
+      "Content Owner": "Scientific Lead",
+      "Priority": "P2",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": 2,
+      "Menu": "About ACCP",
+      "Submenu": "Welcome Messages",
+      "Page Title": "Welcome Messages",
+      "URL Slug": "welcome-messages",
+      "Purpose": "Grouped welcome notes (Host, ACCP President, Organizing Chair, Partners).",
+      "Content Owner": "Secretariat",
+      "Priority": "P1",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": 3,
+      "Menu": "Program",
+      "Page Title": "Program Overview",
+      "URL Slug": "program",
+      "Purpose": "Program-at-a-glance, tracks.",
+      "Content Owner": "Program Chair",
+      "Priority": "P0",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": 3,
+      "Menu": "Program",
+      "Submenu": "Plenary & Keynotes",
+      "Page Title": "Plenary & Keynotes",
+      "URL Slug": "program-plenary",
+      "Purpose": "Speaker cards; topics; schedule blocks.",
+      "Content Owner": "Program Chair",
+      "Priority": "P1",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": 3,
+      "Menu": "Program",
+      "Submenu": "Symposia",
+      "Page Title": "Symposia",
+      "URL Slug": "program-symposia",
+      "Purpose": "Parallel symposia by track.",
+      "Content Owner": "Program Chair",
+      "Priority": "P1",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": 3,
+      "Menu": "Program",
+      "Submenu": "Oral & e-Poster",
+      "Page Title": "Oral & e-Poster Sessions",
+      "URL Slug": "program-oral-poster",
+      "Purpose": "Oral / e-poster timetable and search.",
+      "Content Owner": "Scientific Sec.",
+      "Priority": "P1",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": 3,
+      "Menu": "Program",
+      "Submenu": "Gala dinner"
+    },
+    {
+      "ลำดับ": 3,
+      "Menu": "Program",
+      "Submenu": "Workshops",
+      "Page Title": "Pre-conference Workshops",
+      "URL Slug": "preconference-workshops",
+      "Purpose": "Hands-on workshops with enrollment limits.",
+      "Content Owner": "Workshop Lead",
+      "Priority": "P1",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": 4,
+      "Menu": "Call for abstract",
+      "Submenu": "abstract submission guideline"
+    },
+    {
+      "ลำดับ": 4,
+      "Menu": "Call for abstract",
+      "Submenu": "Call for Abstracts",
+      "Page Title": "Call for Abstracts",
+      "URL Slug": "call-for-abstracts",
+      "Purpose": "Topics, templates, submission link, timeline.",
+      "Content Owner": "Abstracts Chair",
+      "Priority": "P0",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": 5,
+      "Menu": "Registration  ",
+      "Page Title": "Registration Information",
+      "URL Slug": "registration",
+      "Purpose": "Tiers, deadlines, policy, online form CTA.",
+      "Content Owner": "Registration Lead",
+      "Priority": "P0",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": 5,
+      "Menu": "Registration ",
+      "Submenu": "Policies",
+      "Page Title": "Cancellation & Refund Policy",
+      "URL Slug": "registration-policies",
+      "Purpose": "Clear policy text and FAQs.",
+      "Content Owner": "Registration Lead",
+      "Priority": "P2",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": 6,
+      "Menu": "Travel & Accommodation",
+      "Submenu": "Travel ",
+      "Page Title": "Hotels & Rates",
+      "URL Slug": "accommodation",
+      "Purpose": "Partner hotels, rates, booking links.",
+      "Content Owner": "Logistics Lead",
+      "Priority": "P1",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": 6,
+      "Menu": "Travel & Accommodation",
+      "Page Title": "Travel & Visa",
+      "URL Slug": "travel-visa (รายละเอียดตามนี้ https://www.apccmi2025.com/info/visit)",
+      "Purpose": "City intro, visa letters, transport tips.",
+      "Content Owner": "Logistics Lead",
+      "Priority": "P2",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": 7,
+      "Menu": "Sponsorship & Gallery",
+      "Submenu": "Sponsorship",
+      "Page Title": "Sponsorship & Exhibition",
+      "URL Slug": "sponsorship",
+      "Purpose": "Prospectus, tiers/benefits, booth map.",
+      "Content Owner": "Sponsorship Lead",
+      "Priority": "P1",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": 7,
+      "Menu": "Sponsorship & Gallery",
+      "Submenu": "(ตรวจสอบ ใบ sponsor)",
+      "Page Title": "Gallery",
+      "URL Slug": "gallery",
+      "Purpose": "Photos/videos (2025 recap, venue).",
+      "Content Owner": "Media Team",
+      "Priority": "P3",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": 8,
+      "Menu": "Login",
+      "Page Title": "Login",
+      "URL Slug": "login",
+      "Purpose": "Login for reviewers, authors, exhibitors (if applicable).",
+      "Content Owner": "IT Lead",
+      "Priority": "P2",
+      "Status": "Planned"
+    },
+    {
+      "ลำดับ": "ด้านล่าง",
+      "Menu": "Contact/social media",
+      "Page Title": "Contact",
+      "URL Slug": "contact",
+      "Purpose": "Secretariat contact, enquiry form.",
+      "Content Owner": "Secretariat",
+      "Priority": "P1",
+      "Status": "Planned"
+    },
+    {
+      "Menu": "Count down time",
+      "Page Title": "social media"
+    },
+    {
+      "Menu": "banner"
+    }
+  ],
+  "Important Dates": [
+    {
+      "Milestone": "Registration & Abstract Submission OPEN",
+      "Date (YYYY-MM-DD)": 46037,
+      "Visibility": "Public",
+      "__EMPTY": "confirm แล้ว"
+    },
+    {
+      "Milestone": "Abstract Submission CLOSES",
+      "Date (YYYY-MM-DD)": 46096,
+      "Visibility": "Public",
+      "__EMPTY": "confirm แล้ว"
+    },
+    {
+      "Milestone": "Registration CLOSE",
+      "Date (YYYY-MM-DD)": 46212,
+      "Visibility": "Public",
+      "__EMPTY": "confirm แล้ว"
+    },
+    {
+      "Milestone": "Pre-conference Workshops",
+      "Date (YYYY-MM-DD)": "2026-07-09",
+      "Visibility": "Public",
+      "__EMPTY": "confirm แล้ว"
+    },
+    {
+      "Milestone": "Conference Days",
+      "Date (YYYY-MM-DD)": "2026-07-10 – 2026-07-11",
+      "Visibility": "Public",
+      "__EMPTY": "confirm แล้ว"
+    }
+  ],
+  "Abstract Topics": [
+    {
+      "Topic Category #": 1,
+      "Topic Name": "Clinical Pharmacy",
+      "Page Display?": "Yes",
+      "Icon (2025 style)": "Circle-line icon – keep 2025 style"
+    },
+    {
+      "Topic Category #": 2,
+      "Topic Name": "Social and Administrative Pharmacy",
+      "Page Display?": "Yes",
+      "Icon (2025 style)": "Circle-line icon – keep 2025 style"
+    },
+    {
+      "Topic Category #": 3,
+      "Topic Name": "Pharmacology and Toxicology",
+      "Page Display?": "Yes",
+      "Icon (2025 style)": "Circle-line icon – keep 2025 style"
+    },
+    {
+      "Topic Category #": 4,
+      "Topic Name": "Pharmacoeconomics and Pharmacoepidemiology",
+      "Page Display?": "Yes",
+      "Icon (2025 style)": "Circle-line icon – keep 2025 style"
+    },
+    {
+      "Topic Category #": 5,
+      "Topic Name": "Pharmacy Education",
+      "Page Display?": "Yes",
+      "Icon (2025 style)": "Circle-line icon – keep 2025 style"
+    },
+    {
+      "Topic Category #": 6,
+      "Topic Name": "Pharmaceutics and Pharmaceutical Sciences",
+      "Page Display?": "Yes",
+      "Icon (2025 style)": "Circle-line icon – keep 2025 style"
+    },
+    {
+      "Topic Category #": 7,
+      "Topic Name": "Medicinal Chemistry",
+      "Page Display?": "Yes",
+      "Icon (2025 style)": "Circle-line icon – keep 2025 style"
+    },
+    {
+      "Topic Category #": 8,
+      "Topic Name": "Pharmacognosy and Pharmaceutical Biotechnology",
+      "Page Display?": "Yes",
+      "Icon (2025 style)": "Circle-line icon – keep 2025 style"
+    },
+    {
+      "Topic Name": "รอ confirm น่าจะ 5 หมวด",
+      "__EMPTY": "รอ confirm team abstract เรื่องหมวดกับ ฟอร์ม"
+    }
+  ],
+  "Registration Tiers": [
+    {
+      "Program": "International"
+    },
+    {
+      "Program": "Program",
+      "Category": "Category",
+      "__EMPTY": "Early Bird",
+      "__EMPTY_1": "Regular"
+    },
+    {
+      "__EMPTY": "Jan 15 – April 15, 2026",
+      "__EMPTY_1": "April 16 – July 9, 2026"
+    },
+    {
+      "Program": "Conference",
+      "Category": "Student (Undergraduate)",
+      "__EMPTY": "USD 250",
+      "__EMPTY_1": "USD 270"
+    },
+    {
+      "Category": "Professional & Academician",
+      "__EMPTY": "USD 385",
+      "__EMPTY_1": "USD 400"
+    },
+    {
+      "Program": "Pre-Conference Workshop",
+      "Category": "Each workshop topic",
+      "__EMPTY": "USD 70",
+      "__EMPTY_1": "USD 70"
+    },
+    {
+      "Program": "Gala Dinner",
+      "__EMPTY": "USD 75",
+      "__EMPTY_1": "USD 75"
+    },
+    {
+      "Program": "Thai"
+    },
+    {
+      "Program": "Program",
+      "Category": "Category",
+      "__EMPTY": "Early Bird",
+      "__EMPTY_1": "Regular"
+    },
+    {
+      "__EMPTY": "Jan 15 – April 15, 2026",
+      "__EMPTY_1": "April 16 – July 9, 2026"
+    },
+    {
+      "Program": "Conference",
+      "Category": "Student (Undergraduate)",
+      "__EMPTY": " 4,900 THB",
+      "__EMPTY_1": " 4,900 THB"
+    },
+    {
+      "Category": "Professional & Academician",
+      "__EMPTY": "7,900 THB",
+      "__EMPTY_1": "8,900 THB"
+    },
+    {
+      "Program": "Pre-Conference Workshop",
+      "Category": "Each workshop topic",
+      "__EMPTY": "2,100 THB",
+      "__EMPTY_1": "2,100 THB"
+    },
+    {
+      "Program": "Gala Dinner",
+      "__EMPTY": "2,200 THB",
+      "__EMPTY_1": "2,200 THB"
+    }
+  ],
+  "Forms & Automations": [
+    {
+      "Form Name": "Abstract Submission",
+      "Key Fields": "Name; Email; Affiliation; Country; Title; Authors; Category; Keywords; Abstract; Uploads; COI (oral/poster/proceeding?)",
+      "Platform": "Portal / custom form",
+      "Auto-emails": "Auto-reply with tracking ID; copy to author; notify reviewers",
+      "Backoffice Process": "CSV export; reviewer assignment; status updates",
+      "__EMPTY": "https://www.apccmi2025.com/abstracts/guideline"
+    },
+    {
+      "Form Name": "Registration",
+      "Key Fields": "Name; Email; Affiliation; Country; Delegate type; Add-ons; Payment method; Invoice info",
+      "Platform": "Online reg system ",
+      "Auto-emails": "Payment confirmation; invoice PDF",
+      "Backoffice Process": "Finance export; badge print list"
+    }
+  ],
+  "SEO": [
+    {
+      "Slug": "home",
+      "SEO Title": "ACCP 2026 | Asian Conference on Clinical Pharmacy | Bangkok, Thailand",
+      "Meta Description": "Join us at ACCP 2026 in Bangkok, Thailand, 9–11 July 2026 at Centara Grand & Bangkok Convention Centre at CentralWorld. Submit abstracts, register, and explore program details.",
+      "Keywords": "accp, clinical pharmacy, conference, asia, 2026, Bangkok, Thailand"
+    },
+    {
+      "Slug": "call-for-abstracts",
+      "SEO Title": "Call for Abstracts — ACCP 2026",
+      "Meta Description": "Submit your abstract in clinical pharmacy, pharmacoepidemiology, education, and more before the deadline.",
+      "Keywords": "abstracts, submission, ACCP 2026"
+    },
+    {
+      "Slug": "registration",
+      "SEO Title": "Registration — ACCP 2026",
+      "Meta Description": "View fees, deadlines, and register online for ACCP 2026.",
+      "Keywords": "registration, fees, accp 2026"
+    },
+    {
+      "Slug": "program",
+      "SEO Title": "Program — ACCP 2026",
+      "Meta Description": "Explore plenary, symposia, workshops, and oral/e-poster sessions.",
+      "Keywords": "program, plenary, symposia"
+    },
+    {
+      "Slug": "accommodation",
+      "SEO Title": "Accommodation — ACCP 2026",
+      "Meta Description": "Book partner hotels with special conference rates near Centara Grand & Bangkok Convention Centre at CentralWorld, Bangkok.",
+      "Keywords": "hotel, travel, visa, Bangkok"
+    }
+  ],
+  "Timeline & Owners": [
+    {
+      "Milestone": "Kickoff & IA sign-off",
+      "Target Date": "2026-01-15",
+      "Owner": "Web Lead"
+    },
+    {
+      "Milestone": "Branding lock (icon, hero)",
+      "Target Date": "2026-01-15",
+      "Owner": "Design Lead"
+    },
+    {
+      "Milestone": "Abstracts page live",
+      "Target Date": "2026-01-15",
+      "Owner": "Abstracts Chair"
+    },
+    {
+      "Milestone": "Registration page live",
+      "Target Date": "2026-01-15",
+      "Owner": "Registration Lead"
+    },
+    {
+      "Milestone": "Program at a glance live",
+      "Target Date": "2026-04-15",
+      "Owner": "Program Chair"
+    },
+    {
+      "Milestone": "Hotel page live",
+      "Target Date": "2026-04-15",
+      "Owner": "Logistics Lead"
+    },
+    {
+      "Milestone": "Full program live",
+      "Target Date": "2026-02-01",
+      "Owner": "Program Chair"
+    },
+    {
+      "Milestone": "Final checks & freeze",
+      "Target Date": 46117,
+      "Owner": "Web Lead"
+    }
+  ],
+  "Accessibility QA": [
+    {
+      "Item": "Alt text on all non-decorative images",
+      "Standard": "WCAG 2.2 AA",
+      "Scope": "All pages"
+    },
+    {
+      "Item": "Color contrast ≥ 4.5:1",
+      "Standard": "WCAG 2.2 AA",
+      "Scope": "Global"
+    },
+    {
+      "Item": "Keyboard navigation",
+      "Standard": "WCAG 2.2 AA",
+      "Scope": "Global"
+    },
+    {
+      "Item": "Captions/subtitles for videos",
+      "Standard": "WCAG 2.2 AA",
+      "Scope": "Gallery"
+    },
+    {
+      "Item": "Form labels & error states",
+      "Standard": "WCAG 2.2 AA",
+      "Scope": "Forms"
+    },
+    {
+      "Item": "Language attributes (en/th/…)",
+      "Standard": "WCAG 2.2 AA",
+      "Scope": "Global"
+    }
+  ],
+  "Lists": [
+    {
+      "Priority": "Status",
+      "P0": "Planned",
+      "P1": "Draft",
+      "P2": "In progress",
+      "P3": "Final",
+      "__EMPTY": "Published"
+    },
+    {
+      "Priority": "Owners",
+      "P0": "Web Lead",
+      "P1": "Scientific Lead",
+      "P2": "Program Chair",
+      "P3": "Scientific Sec.",
+      "__EMPTY": "Workshop Lead",
+      "__EMPTY_1": "Abstracts Chair",
+      "__EMPTY_2": "Registration Lead",
+      "__EMPTY_3": "Logistics Lead",
+      "__EMPTY_4": "Sponsorship Lead",
+      "__EMPTY_5": "Media Team",
+      "__EMPTY_6": "Secretariat",
+      "__EMPTY_7": "IT Lead",
+      "__EMPTY_8": "Design Lead"
+    },
+    {
+      "Priority": "Pages",
+      "P0": "Home",
+      "P1": "Call for Abstracts",
+      "P2": "Registration",
+      "P3": "Program Overview",
+      "__EMPTY": "Accommodation"
+    },
+    {
+      "Priority": "YesNo",
+      "P0": "Yes",
+      "P1": "No"
+    },
+    {
+      "Priority": "Visibility",
+      "P0": "Public",
+      "P1": "Internal"
+    },
+    {
+      "Priority": "RegWindows",
+      "P0": "Early-bird",
+      "P1": "Regular",
+      "P2": "On-site"
+    },
+    {
+      "Priority": "RegCategory",
+      "P0": "Full Registration",
+      "P1": "Day Registration",
+      "P2": "Workshops"
+    },
+    {
+      "Priority": "DelegateType",
+      "P0": "All Delegate",
+      "P1": "Pharmacy students"
+    }
+  ],
+  "Template - Abstract Form": [
+    {
+      "Field": "Corresponding Author Email",
+      "Type": "Text (email)",
+      "Required?": "Yes",
+      "Validation/Note": "Use Sheets rule: is valid email"
+    },
+    {
+      "Field": "Full Name",
+      "Type": "Text",
+      "Required?": "Yes"
+    },
+    {
+      "Field": "Affiliation",
+      "Type": "Text",
+      "Required?": "Yes"
+    },
+    {
+      "Field": "Country",
+      "Type": "Dropdown",
+      "Required?": "Yes",
+      "Validation/Note": "Custom list or Data > Data validation"
+    },
+    {
+      "Field": "Abstract Title",
+      "Type": "Text",
+      "Required?": "Yes",
+      "Validation/Note": "≤ 25 words title"
+    },
+    {
+      "Field": "Authors & Affiliations",
+      "Type": "Long text",
+      "Required?": "Yes",
+      "Validation/Note": "Structured format"
+    },
+    {
+      "Field": "Category (Topic)",
+      "Type": "Dropdown",
+      "Required?": "Yes",
+      "Validation/Note": "#REF!"
+    },
+    {
+      "Field": "Keywords (3–5)",
+      "Type": "Chips",
+      "Required?": "Yes",
+      "Validation/Note": "Comma-separated; ≤ 5"
+    },
+    {
+      "Field": "Abstract Body",
+      "Type": "Long text",
+      "Required?": "Yes",
+      "Validation/Note": "IMRaD ≤ 300 words"
+    },
+    {
+      "Field": "Upload (DOCX template)",
+      "Type": "File link",
+      "Required?": "Yes",
+      "Validation/Note": "Collect via form platform"
+    },
+    {
+      "Field": "Conflict of Interest",
+      "Type": "Dropdown",
+      "Required?": "Yes",
+      "Validation/Note": "Yes/No"
+    }
+  ],
+  "Template - Registration Form": [
+    {
+      "Field": "Email",
+      "Type": "Text (email)",
+      "Required?": "Yes",
+      "Validation/Note": "Sheets: is valid email"
+    },
+    {
+      "Field": "Full Name",
+      "Type": "Text",
+      "Required?": "Yes"
+    },
+    {
+      "Field": "Affiliation/Organization",
+      "Type": "Text",
+      "Required?": "Yes"
+    },
+    {
+      "Field": "Country",
+      "Type": "Dropdown",
+      "Required?": "Yes"
+    },
+    {
+      "Field": "Delegate Type",
+      "Type": "Dropdown",
+      "Required?": "Yes",
+      "Validation/Note": ""
+    },
+    {
+      "Field": "Add-ons: Workshop",
+      "Type": "Checkbox",
+      "Required?": "No",
+      "Validation/Note": "Link to workshop list"
+    },
+    {
+      "Field": "Add-ons: Gala Dinner",
+      "Type": "Checkbox",
+      "Required?": "No"
+    },
+    {
+      "Field": "Payment Method",
+      "Type": "Dropdown",
+      "Required?": "Yes",
+      "Validation/Note": "Bank transfer / Credit card"
+    },
+    {
+      "Field": "Need Invoice?",
+      "Type": "Dropdown",
+      "Required?": "Yes",
+      "Validation/Note": "Yes/No"
+    },
+    {
+      "Field": "Invoice Organization Name",
+      "Type": "Text",
+      "Required?": "If Yes"
+    },
+    {
+      "Field": "Invoice Tax ID",
+      "Type": "Text",
+      "Required?": "If Yes"
+    }
+  ]
+}
