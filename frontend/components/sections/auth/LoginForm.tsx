@@ -17,17 +17,10 @@ export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [licenseId, setLicenseId] = useState('');
-    const [idCard, setIdCard] = useState('');
-    const [studentIdCard, setStudentIdCard] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    const validateThaiId = (id: string): boolean => {
-        if (id.length !== 13 || !/^\d{13}$/.test(id)) return false;
-        let sum = 0;
-        for (let i = 0; i < 12; i++) sum += parseInt(id[i]) * (13 - i);
-        return (11 - (sum % 11)) % 10 === parseInt(id[12]);
-    };
+    // validateThaiId removed - no longer needed for login
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -35,25 +28,15 @@ export default function LoginForm() {
 
         try {
             // Validation
-            if (activeTab === 'thaiStudent') {
-                if (!email || !password || !studentIdCard) {
-                    alert(locale === 'th' ? 'กรุณากรอกข้อมูลให้ครบถ้วน' : 'Please fill in all fields');
-                    setIsLoading(false);
-                    return;
-                }
-                // TODO: Re-enable validation for production
-                // if (!validateThaiId(studentIdCard)) {
-                //     alert(locale === 'th' ? 'เลขบัตรประชาชนไม่ถูกต้อง' : 'Invalid Thai ID card number');
-                //     setIsLoading(false);
-                //     return;
-                // }
-            } else if (activeTab === 'thaiPharmacist') {
-                if (!email || !licenseId || !idCard) {
+            if (activeTab === 'thaiPharmacist') {
+                // Thai Pharmacist: License Number + Password
+                if (!licenseId || !password) {
                     alert(locale === 'th' ? 'กรุณากรอกข้อมูลให้ครบถ้วน' : 'Please fill in all fields');
                     setIsLoading(false);
                     return;
                 }
             } else {
+                // Others: Email + Password
                 if (!email || !password) {
                     alert(locale === 'th' ? 'กรุณากรอกข้อมูลให้ครบถ้วน' : 'Please fill in all fields');
                     setIsLoading(false);
@@ -66,15 +49,15 @@ export default function LoginForm() {
             const userData = {
                 thaiStudent: {
                     firstName: 'นักศึกษา', lastName: 'ไทย', email, country: 'Thailand',
-                    idCard: studentIdCard, isThai: true, delegateType: 'thai_student' as const
+                    isThai: true, delegateType: 'thai_student' as const
                 },
                 internationalStudent: {
                     firstName: 'International', lastName: 'Student', email, country: 'International',
                     isThai: false, delegateType: 'international_student' as const
                 },
                 thaiPharmacist: {
-                    firstName: 'เภสัชกร', lastName: 'ไทย', email,
-                    country: 'Thailand', idCard, isThai: true, delegateType: 'thai_pharmacist' as const
+                    firstName: 'เภสัชกร', lastName: 'ไทย', email: '', licenseId,
+                    country: 'Thailand', isThai: true, delegateType: 'thai_pharmacist' as const
                 },
                 internationalPharmacist: {
                     firstName: 'International', lastName: 'Pharmacist', email, country: 'International',
@@ -94,9 +77,9 @@ export default function LoginForm() {
 
     const tabs: { id: TabType; label: string; labelTh: string }[] = [
         { id: 'thaiStudent', label: 'Thai Student', labelTh: 'นักศึกษาไทย' },
-        { id: 'internationalStudent', label: "Int'l Student", labelTh: 'นศ.ต่างชาติ' },
+        { id: 'internationalStudent', label: 'International Student', labelTh: 'นศ.ต่างชาติ' },
         { id: 'thaiPharmacist', label: 'Thai Pharmacist', labelTh: 'เภสัชกรไทย' },
-        { id: 'internationalPharmacist', label: "Int'l Pharmacist", labelTh: 'ภก.ต่างชาติ' }
+        { id: 'internationalPharmacist', label: 'Professional & Academician', labelTh: 'ภก.ต่างชาติ' }
     ];
 
     const isThai = activeTab === 'thaiStudent' || activeTab === 'thaiPharmacist';
@@ -207,57 +190,11 @@ export default function LoginForm() {
                     </>
                 )}
 
-                {/* Thai Student: ID Card */}
-                {activeTab === 'thaiStudent' && (
-                    <div style={{ marginBottom: '16px' }}>
-                        <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '6px' }}>
-                            {locale === 'th' ? 'เลขบัตรประชาชน' : 'Thai ID Card'} <span style={{ color: '#e53935' }}>*</span>
-                        </label>
-                        <input
-                            type="text"
-                            value={studentIdCard}
-                            onChange={(e) => setStudentIdCard(e.target.value.replace(/\D/g, '').slice(0, 13))}
-                            placeholder={locale === 'th' ? 'เลข 13 หลัก' : '13-digit number'}
-                            maxLength={13}
-                            required
-                            style={{
-                                width: '100%',
-                                padding: '12px 14px',
-                                fontSize: '15px',
-                                border: '1px solid #e0e0e0',
-                                borderRadius: '8px',
-                                outline: 'none'
-                            }}
-                        />
-                        <p style={{ fontSize: '12px', color: '#888', marginTop: '4px' }}>
-                            {locale === 'th' ? 'ยืนยันสัญชาติไทยเพื่อรับราคาพิเศษ' : 'Verify Thai nationality for THB pricing'}
-                        </p>
-                    </div>
-                )}
+                {/* Thai Student: No additional fields needed - uses Email + Password */}
 
-                {/* Thai Pharmacist: Email + License ID + ID Card */}
+                {/* Thai Pharmacist: License ID + Password */}
                 {activeTab === 'thaiPharmacist' && (
                     <>
-                        <div style={{ marginBottom: '16px' }}>
-                            <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '6px' }}>
-                                {t('email')} <span style={{ color: '#e53935' }}>*</span>
-                            </label>
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="email@example.com"
-                                required
-                                style={{
-                                    width: '100%',
-                                    padding: '12px 14px',
-                                    fontSize: '15px',
-                                    border: '1px solid #e0e0e0',
-                                    borderRadius: '8px',
-                                    outline: 'none'
-                                }}
-                            />
-                        </div>
                         <div style={{ marginBottom: '16px' }}>
                             <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '6px' }}>
                                 {t('licenseId')} <span style={{ color: '#e53935' }}>*</span>
@@ -280,14 +217,13 @@ export default function LoginForm() {
                         </div>
                         <div style={{ marginBottom: '16px' }}>
                             <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '6px' }}>
-                                {t('idCard')} <span style={{ color: '#e53935' }}>*</span>
+                                {t('password')} <span style={{ color: '#e53935' }}>*</span>
                             </label>
                             <input
-                                type="text"
-                                value={idCard}
-                                onChange={(e) => setIdCard(e.target.value.replace(/\D/g, '').slice(0, 13))}
-                                placeholder={t('idCardExample')}
-                                maxLength={13}
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="••••••••"
                                 required
                                 style={{
                                     width: '100%',
