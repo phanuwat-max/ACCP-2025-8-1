@@ -16,7 +16,9 @@ export default function Payment() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
-	const [paymentMethod, setPaymentMethod] = useState<'qr' | 'card'>('qr');
+	// Get payment method from URL, default to 'qr' if not specified
+	const methodParam = searchParams.get('method') as 'qr' | 'card' | null;
+	const [paymentMethod, setPaymentMethod] = useState<'qr' | 'card'>(methodParam || 'qr');
 	const [isProcessing, setIsProcessing] = useState(false);
 	const [showSuccess, setShowSuccess] = useState(false);
 	const [qrTimer, setQrTimer] = useState(300); // 5 minutes
