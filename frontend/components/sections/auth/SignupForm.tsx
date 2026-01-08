@@ -5,7 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 
-type TabType = 'thaiStudent' | 'internationalStudent' | 'internationalPharmacist';
+type TabType = 'thaiStudent' | 'internationalStudent' | 'Professional & Academician';
 
 const internationalCountries = [
     "Afghanistan", "Albania", "Algeria", "Argentina", "Australia", "Austria", "Bangladesh",
@@ -35,6 +35,7 @@ export default function SignupForm() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [organization, setOrganization] = useState('');
     const [idCard, setIdCard] = useState('');
+    const [passportId, setPassportId] = useState('');
     const [country, setCountry] = useState('');
     const [agreeTerms, setAgreeTerms] = useState(false);
 
@@ -107,8 +108,8 @@ export default function SignupForm() {
 
     const tabs: { id: TabType; label: string; labelTh: string }[] = [
         { id: 'thaiStudent', label: 'Thai Student', labelTh: 'นักศึกษาไทย' },
-        { id: 'internationalStudent', label: "Int'l Student", labelTh: 'นศ.ต่างชาติ' },
-        { id: 'internationalPharmacist', label: "Int'l Pharmacist", labelTh: 'ภก.ต่างชาติ' }
+        { id: 'internationalStudent', label: 'International Student', labelTh: 'นศ.ต่างชาติ' },
+        { id: 'Professional & Academician', label: 'Professional & Academician', labelTh: 'ภก.ต่างชาติ' }
     ];
 
     const isThai = activeTab === 'thaiStudent';
@@ -222,18 +223,29 @@ export default function SignupForm() {
                     </div>
                 )}
 
-                {/* International: Country */}
+                {/* International: Passport ID + Country */}
                 {activeTab !== 'thaiStudent' && (
-                    <div style={{ marginBottom: '16px' }}>
-                        <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '6px' }}>
-                            {locale === 'th' ? 'ประเทศ' : 'Country'} <span style={{ color: '#e53935' }}>*</span>
-                        </label>
-                        <select value={country} onChange={(e) => setCountry(e.target.value)} required
-                            style={{ ...inputStyle, appearance: 'none', background: '#fff url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 12px center', backgroundSize: '16px' }}>
-                            <option value="">{locale === 'th' ? 'เลือกประเทศ' : 'Select country'}</option>
-                            {internationalCountries.map(c => <option key={c} value={c}>{c}</option>)}
-                        </select>
-                    </div>
+                    <>
+                        <div style={{ marginBottom: '16px' }}>
+                            <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '6px' }}>
+                                {locale === 'th' ? 'หมายเลขหนังสือเดินทาง' : 'Passport ID'} <span style={{ color: '#e53935' }}>*</span>
+                            </label>
+                            <input type="text" value={passportId}
+                                onChange={(e) => setPassportId(e.target.value.toUpperCase())}
+                                placeholder={locale === 'th' ? 'เช่น AB1234567' : 'e.g. AB1234567'}
+                                required style={inputStyle} />
+                        </div>
+                        <div style={{ marginBottom: '16px' }}>
+                            <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '6px' }}>
+                                {locale === 'th' ? 'ประเทศ' : 'Country'} <span style={{ color: '#e53935' }}>*</span>
+                            </label>
+                            <select value={country} onChange={(e) => setCountry(e.target.value)} required
+                                style={{ ...inputStyle, appearance: 'none', background: '#fff url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 12px center', backgroundSize: '16px' }}>
+                                <option value="">{locale === 'th' ? 'เลือกประเทศ' : 'Select country'}</option>
+                                {internationalCountries.map(c => <option key={c} value={c}>{c}</option>)}
+                            </select>
+                        </div>
+                    </>
                 )}
 
                 {/* Email */}
