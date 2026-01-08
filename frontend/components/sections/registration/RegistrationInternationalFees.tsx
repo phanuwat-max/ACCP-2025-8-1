@@ -7,15 +7,19 @@ export default function RegistrationInternationalFees() {
     const t = useTranslations('registration');
     const tCommon = useTranslations('common');
     const locale = useLocale();
-    const { user } = useAuth();
+    const { user, isAuthenticated } = useAuth();
+
+    // Determine user type
+    const isIntlStudent = user?.delegateType === 'international_student';
+    const isIntlPharmacist = user?.delegateType === 'international_pharmacist';
 
     const pricingOptions = [
         {
             type: 'student',
-            delegateType: 'pharmacy_students',
-            title: t('student'),
+            show: !isAuthenticated || isIntlStudent,
+            title: locale === 'th' ? 'นักศึกษาต่างชาติ' : "Int'l Student",
             price: '$250',
-            regularPrice: '$270',
+            regularPrice: `$270 ${t('regular')}`,
             features: [
                 t('fullConferenceAccess'),
                 t('conferenceMaterials'),
@@ -26,10 +30,10 @@ export default function RegistrationInternationalFees() {
         },
         {
             type: 'professional',
-            delegateType: 'all_delegate',
-            title: t('professional'),
+            show: !isAuthenticated || isIntlPharmacist,
+            title: locale === 'th' ? 'เภสัชกรต่างชาติ' : "Int'l Professional",
             price: '$385',
-            regularPrice: '$400',
+            regularPrice: `$400 ${t('regular')}`,
             features: [
                 t('fullConferenceAccess'),
                 t('conferenceMaterials'),
@@ -41,13 +45,13 @@ export default function RegistrationInternationalFees() {
         },
         {
             type: 'addons',
-            delegateType: null, // Show for all
+            show: true,
             title: t('addons'),
             price: t('workshopPriceUSD'),
             regularPrice: t('perWorkshop'),
             features: [
                 t('preConferenceWorkshop'),
-                `9 ${tCommon('programOverview').includes('ภาพรวม') ? 'ก.ค. 2569' : 'July 2026'}`,
+                `9 ${locale === 'th' ? 'ก.ค. 2569' : 'July 2026'}`,
                 t('handsOnTraining')
             ],
             addons: [
@@ -62,12 +66,7 @@ export default function RegistrationInternationalFees() {
         }
     ];
 
-    // Filter pricing options based on user delegate type
-    const filteredOptions = pricingOptions.filter(option => {
-        if (!user?.delegateType) return true; // Show all if not logged in
-        if (option.delegateType === null) return true; // Always show addons
-        return option.delegateType === user.delegateType;
-    });
+    const filteredOptions = pricingOptions.filter(option => option.show);
 
     return (
         <div className="pricing-lan-section-area sp1" style={{ backgroundColor: '#f5f5f5' }}>
@@ -82,7 +81,7 @@ export default function RegistrationInternationalFees() {
                     </div>
                 </div>
                 <div className="row">
-                    {filteredOptions.map((option, index) => (
+                    {filteredOptions.map((option) => (
                         <div key={option.type} className={`col-lg-${filteredOptions.length === 1 ? '12' : filteredOptions.length === 2 ? '6' : '4'} col-md-6`}>
                             <div className="pricing-boxarea" style={option.highlighted ? { border: '2px solid #FFBA00' } : {}}>
                                 <h5>{option.title}</h5>

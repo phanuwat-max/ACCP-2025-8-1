@@ -7,13 +7,17 @@ export default function RegistrationThaiFees() {
     const t = useTranslations('registration');
     const tCommon = useTranslations('common');
     const locale = useLocale();
-    const { user } = useAuth();
+    const { user, isAuthenticated } = useAuth();
+
+    // Determine user type
+    const isThaiStudent = user?.delegateType === 'thai_student';
+    const isThaiPharmacist = user?.delegateType === 'thai_pharmacist';
 
     const pricingOptions = [
         {
             type: 'student',
-            delegateType: 'pharmacy_students',
-            title: t('student'),
+            show: !isAuthenticated || isThaiStudent,
+            title: locale === 'th' ? 'นักศึกษาไทย' : 'Thai Student',
             price: t('studentPriceTHB'),
             regularPrice: t('studentRegularTHB'),
             features: [
@@ -26,8 +30,8 @@ export default function RegistrationThaiFees() {
         },
         {
             type: 'professional',
-            delegateType: 'all_delegate',
-            title: t('professional'),
+            show: !isAuthenticated || isThaiPharmacist,
+            title: locale === 'th' ? 'เภสัชกรไทย' : 'Thai Professional',
             price: t('professionalPriceTHB'),
             regularPrice: t('professionalRegularTHB'),
             features: [
@@ -41,13 +45,13 @@ export default function RegistrationThaiFees() {
         },
         {
             type: 'addons',
-            delegateType: null, // Show for all
+            show: true,
             title: t('addons'),
             price: t('workshopPriceTHB'),
             regularPrice: t('perWorkshop'),
             features: [
                 t('preConferenceWorkshop'),
-                `9 ${tCommon('programOverview').includes('ภาพรวม') ? 'ก.ค. 2569' : 'July 2026'}`,
+                `9 ${locale === 'th' ? 'ก.ค. 2569' : 'July 2026'}`,
                 t('handsOnTraining')
             ],
             addons: [
@@ -62,12 +66,7 @@ export default function RegistrationThaiFees() {
         }
     ];
 
-    // Filter pricing options based on user delegate type
-    const filteredOptions = pricingOptions.filter(option => {
-        if (!user?.delegateType) return true; // Show all if not logged in
-        if (option.delegateType === null) return true; // Always show addons
-        return option.delegateType === user.delegateType;
-    });
+    const filteredOptions = pricingOptions.filter(option => option.show);
 
     return (
         <div className="pricing-lan-section-area sp1">
@@ -82,7 +81,7 @@ export default function RegistrationThaiFees() {
                     </div>
                 </div>
                 <div className="row">
-                    {filteredOptions.map((option, index) => (
+                    {filteredOptions.map((option) => (
                         <div key={option.type} className={`col-lg-${filteredOptions.length === 1 ? '12' : filteredOptions.length === 2 ? '6' : '4'} col-md-6`}>
                             <div className="pricing-boxarea" style={option.highlighted ? { border: '2px solid #FFBA00' } : {}}>
                                 <h5>{option.title}</h5>

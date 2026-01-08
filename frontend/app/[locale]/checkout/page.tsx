@@ -24,16 +24,16 @@ const registrationPackages: RegistrationPackage[] = [
   {
     id: "student",
     priceUSD: 250,
-    priceTHB: 8500,
+    priceTHB: 4900,
     originalPriceUSD: 270,
-    originalPriceTHB: 9000,
+    originalPriceTHB: 4900,
   },
   {
     id: "professional",
     priceUSD: 385,
-    priceTHB: 13000,
+    priceTHB: 7900,
     originalPriceUSD: 400,
-    originalPriceTHB: 13500,
+    originalPriceTHB: 8900,
   },
 ];
 
@@ -41,12 +41,12 @@ const addOns: AddOn[] = [
   {
     id: "workshop",
     priceUSD: 70,
-    priceTHB: 2400,
+    priceTHB: 2100,
   },
   {
     id: "gala",
     priceUSD: 75,
-    priceTHB: 2500,
+    priceTHB: 2200,
   },
 ];
 
@@ -58,8 +58,8 @@ export default function Checkout() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Determine if user is Thai based on stored country
-  const isThai = user?.country?.toLowerCase() === "thailand";
+  // Determine if user is Thai based on isThai flag (set during signup/login)
+  const isThai = user?.isThai === true;
 
   const [selectedPackage, setSelectedPackage] = useState<string>("");
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
@@ -85,20 +85,27 @@ export default function Checkout() {
     if (!isAuthenticated) {
       router.push(`/${locale}/login`);
     } else {
-      // International pharmacists (foreign_delegates) should always use professional package
-      let packageParam = searchParams.get("package") || "professional";
-      
-      // Override package selection for international pharmacists
-      if (user?.delegateType === 'foreign_delegates') {
+      let packageParam = searchParams.get("package");
+
+      // Strict package logic based on user role
+      const isStudent = user?.delegateType === 'thai_student' || user?.delegateType === 'international_student';
+
+      if (isStudent) {
+        // Students default to student package
+        if (!packageParam) {
+          packageParam = "student";
+        }
+      } else {
+        // All Pharmacists are forced to professional package
         packageParam = "professional";
       }
-      
+
       setSelectedPackage(packageParam);
       setIsLoading(false);
     }
   }, [isAuthenticated, router, locale, searchParams, user]);
 
-  // Calculate total price
+  // Calculate total price based on isThai flag
   useEffect(() => {
     const pkg = registrationPackages.find((p) => p.id === selectedPackage);
     const packagePrice = isThai ? pkg?.priceTHB || 0 : pkg?.priceUSD || 0;
@@ -275,20 +282,20 @@ export default function Checkout() {
                         {(isThai
                           ? currentPackage?.originalPriceTHB
                           : currentPackage?.originalPriceUSD) && (
-                          <p
-                            style={{
-                              margin: "5px 0 0 0",
-                              fontSize: "12px",
-                              color: "#999",
-                              textDecoration: "line-through",
-                            }}
-                          >
-                            {isThai ? "฿" : "$"}
-                            {isThai
-                              ? currentPackage?.originalPriceTHB
-                              : currentPackage?.originalPriceUSD}
-                          </p>
-                        )}
+                            <p
+                              style={{
+                                margin: "5px 0 0 0",
+                                fontSize: "12px",
+                                color: "#999",
+                                textDecoration: "line-through",
+                              }}
+                            >
+                              {isThai ? "฿" : "$"}
+                              {isThai
+                                ? currentPackage?.originalPriceTHB
+                                : currentPackage?.originalPriceUSD}
+                            </p>
+                          )}
                       </div>
                     </div>
 

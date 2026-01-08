@@ -169,7 +169,7 @@
 
 /* Table Mobile Scroll */
 @media (max-width: 767px) {
-    table {
+    .table-responsive table {
         display: block;
         overflow-x: auto;
         white-space: nowrap;
@@ -263,11 +263,12 @@
 }
 
 /* Fix for overlapping elements */
-@media (max-width: 767px) {
+/* Fix for overlapping elements - Commented out as it's too aggressive and breaks sliders
+/* @media (max-width: 767px) {
     .position-absolute {
         position: relative !important;
     }
-}
+} */
 
 /* Smooth scrolling */
 html {
@@ -295,5 +296,12 @@ select:focus {
 
     .inner-page-header {
         padding-top: 20px !important;
+    }
+}
+
+/* Fix mobile header overlapping text */
+@media (max-width: 991px) {
+    .mobile-header.mobile-haeder1 {
+        position: relative !important;
     }
 }

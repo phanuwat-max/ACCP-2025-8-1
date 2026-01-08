@@ -356,7 +356,7 @@
     "signIn": "Sign In",
     "noAccount": "Don't have an account?",
     "signUp": "Sign Up Now",
-    "memberLogin": "Member Login",
+    "memberLogin": "Student Login",
     "pharmacistLogin": "Pharmacist Login",
     "licenseId": "License ID",
     "idCard": "National ID Card",
@@ -370,7 +370,7 @@
     "internationalPharmacist": "International Pharmacist",
     "internationalLogin": "International Pharmacist Login",
     "tabs": {
-      "member": "Member",
+      "member": "Student",
       "thaiPharmacist": "Thai Pharmacist",
       "internationalPharmacist": "International Pharmacist"
     }
@@ -922,5 +922,3 @@
     }
   }
 }
-
-

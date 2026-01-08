@@ -40,9 +40,9 @@ export default function MemorialPopup() {
         }}>
             <div style={{
                 position: 'relative',
-                maxWidth: '900px',
+                maxWidth: '1200px',
                 width: '100%',
-                maxHeight: '90vh',
+                maxHeight: '95vh',
                 display: 'flex',
                 justifyContent: 'center',
                 flexDirection: 'column',
@@ -57,7 +57,7 @@ export default function MemorialPopup() {
                         style={{
                             width: '100%',
                             height: 'auto',
-                            maxHeight: '70vh',
+                            maxHeight: '85vh',
                             objectFit: 'contain',
                             borderRadius: '8px',
                             boxShadow: '0 10px 30px rgba(0,0,0,0.5)'

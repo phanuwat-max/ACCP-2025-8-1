@@ -66,7 +66,7 @@ export default function Countdown({ style }: any) {
 						<br />Minutes
 					</div>
 					<div className="space14" />
-					<div className="time-box" style={{ margin: "0 26px 0 0" }}>
+					<div className="time-box">
 						<span id="seconds1" className="time-value">{timeParts.seconds}</span>
 						<br />Seconds
 					</div>
@@ -138,7 +138,7 @@ export default function Countdown({ style }: any) {
 						<br />
 					</div>
 					<div className="space14" />
-					<div className="time-box" style={{ margin: '0 26px 0 0' }}>
+					<div className="time-box">
 						<span id="seconds" className="time-value">{timeParts.seconds} <span>Seconds</span></span>
 						<br />
 					</div>

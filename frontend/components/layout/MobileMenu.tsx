@@ -84,12 +84,7 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                                 <li className="hash-has-sub"><Link href={`/${locale}/gallery`} className="hash-nav">{t('gallery')}</Link></li>
                             </ul>
                         </li>
-                        {!isAuthenticated && (
-                            <>
-                                <li className="hash-has-sub"><Link href={`/${locale}/login`} className="hash-nav" style={{ color: '#FFBA00' }}><i className="fa-solid fa-right-to-bracket" style={{ marginRight: '8px' }} />{t('login')}</Link></li>
-                                <li className="hash-has-sub"><Link href={`/${locale}/signup`} className="hash-nav" style={{ color: '#00C853' }}><i className="fa-solid fa-user-plus" style={{ marginRight: '8px' }} />{t('signUp')}</Link></li>
-                            </>
-                        )}
+
                     </ul>
 
                     <div className="allmobilesection">
@@ -103,7 +98,7 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                             position: 'relative',
                             zIndex: 10
                         }}>
-                             <Link
+                            <Link
                                 href={`/th${getPathWithoutLocale()}`}
                                 style={{
                                     display: 'flex',

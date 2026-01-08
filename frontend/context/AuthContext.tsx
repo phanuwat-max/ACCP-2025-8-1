@@ -6,7 +6,9 @@ interface User {
     lastName: string;
     email: string;
     country?: string;
-    delegateType: 'pharmacy_students' | 'all_delegate' | 'foreign_delegates';
+    idCard?: string;  // Thai ID card (13 digits) for Thai users
+    isThai: boolean;  // Determines currency: true = THB, false = USD
+    delegateType: 'thai_student' | 'international_student' | 'thai_pharmacist' | 'international_pharmacist';
 }
 
 interface AuthContextType {

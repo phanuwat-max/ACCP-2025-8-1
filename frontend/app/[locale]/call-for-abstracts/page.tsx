@@ -2,8 +2,10 @@
 import Layout from "@/components/layout/Layout"
 import Link from "next/link"
 import { useTranslations } from 'next-intl'
-import AbstractTopics from "@/components/sections/abstracts/AbstractTopics"
+import { useAuth } from '@/context/AuthContext'
+
 import AbstractTimeline from "@/components/sections/abstracts/AbstractTimeline"
+import AbstractTopicList from "@/components/sections/abstracts/AbstractTopicList"
 import AbstractCallInstructions from "@/components/sections/abstracts/AbstractCallInstructions"
 import CallSubmissionSteps from "@/components/sections/abstracts/CallSubmissionSteps"
 import AbstractExample from "@/components/sections/abstracts/AbstractExample"
@@ -11,6 +13,10 @@ import AbstractExample from "@/components/sections/abstracts/AbstractExample"
 export default function CallForAbstracts() {
     const t = useTranslations('callForAbstracts')
     const tCommon = useTranslations('common')
+    const { user, isAuthenticated } = useAuth()
+
+    // Check if user is a pharmacist (Thai or International)
+    const isPharmacist = isAuthenticated && (user?.delegateType === 'thai_pharmacist' || user?.delegateType === 'international_pharmacist');
 
     return (
         <>
@@ -31,8 +37,9 @@ export default function CallForAbstracts() {
                         </div>
                     </div>
 
-                    <AbstractTopics />
+
                     <AbstractTimeline />
+                    <AbstractTopicList />
                     <AbstractCallInstructions />
                     <CallSubmissionSteps />
                     <AbstractExample />
@@ -64,35 +71,38 @@ export default function CallForAbstracts() {
                                         }}>
                                             {t('lateBreakingDesc')}
                                         </p>
-                                        <Link
-                                            href="/abstract-submission"
-                                            className="btn"
-                                            style={{
-                                                background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-                                                color: 'white',
-                                                padding: '15px 40px',
-                                                fontSize: '16px',
-                                                fontWeight: '600',
-                                                border: 'none',
-                                                borderRadius: '6px',
-                                                textTransform: 'uppercase',
-                                                letterSpacing: '0.5px',
-                                                display: 'inline-block',
-                                                textDecoration: 'none',
-                                                transition: 'all 0.3s ease',
-                                                boxShadow: '0 4px 15px rgba(245, 158, 11, 0.3)'
-                                            }}
-                                            onMouseEnter={(e) => {
-                                                e.currentTarget.style.transform = 'translateY(-2px)';
-                                                e.currentTarget.style.boxShadow = '0 6px 20px rgba(245, 158, 11, 0.4)';
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                e.currentTarget.style.transform = 'translateY(0)';
-                                                e.currentTarget.style.boxShadow = '0 4px 15px rgba(245, 158, 11, 0.3)';
-                                            }}
-                                        >
-                                            {t('startLateBreaking')}
-                                        </Link>
+
+                                        {isPharmacist && (
+                                            <Link
+                                                href="/abstract-submission"
+                                                className="btn"
+                                                style={{
+                                                    background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                                                    color: 'white',
+                                                    padding: '15px 40px',
+                                                    fontSize: '16px',
+                                                    fontWeight: '600',
+                                                    border: 'none',
+                                                    borderRadius: '6px',
+                                                    textTransform: 'uppercase',
+                                                    letterSpacing: '0.5px',
+                                                    display: 'inline-block',
+                                                    textDecoration: 'none',
+                                                    transition: 'all 0.3s ease',
+                                                    boxShadow: '0 4px 15px rgba(245, 158, 11, 0.3)'
+                                                }}
+                                                onMouseEnter={(e) => {
+                                                    e.currentTarget.style.transform = 'translateY(-2px)';
+                                                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(245, 158, 11, 0.4)';
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.currentTarget.style.transform = 'translateY(0)';
+                                                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(245, 158, 11, 0.3)';
+                                                }}
+                                            >
+                                                {t('startLateBreaking')}
+                                            </Link>
+                                        )}
                                     </div>
                                 </div>
                             </div>
