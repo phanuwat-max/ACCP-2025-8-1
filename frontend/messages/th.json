@@ -817,7 +817,11 @@
         "addOnsOptional": "บริการเสริม (ไม่บังคับ)",
         "orderSummary": "สรุปคำสั่งซื้อ",
         "registration": "การลงทะเบียน",
-        "addOns": "บริการเสริม",
+        "addOnsTitle": "บริการเสริม",
+        "addOns": {
+            "workshop": "เวิร์คช็อป",
+            "gala": "งานเลี้ยงกาลาดินเนอร์"
+        },
         "totalAmount": "ยอดรวมทั้งหมด",
         "personalDetails": "ข้อมูลส่วนตัว",
         "paymentMethod": "วิธีการชำระเงิน",
