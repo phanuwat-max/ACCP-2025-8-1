@@ -414,55 +414,11 @@ export default function Registration() {
                   </div>
                 </div>
 
-                {/* Section 4: Payment Method */}
-                <div style={{
-                  backgroundColor: "#fff",
-                  padding: "30px",
-                  borderRadius: "16px",
-                  boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-                  marginBottom: "24px"
-                }}>
-
-
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-                    <PaymentMethodCard
-                      id="qr"
-                      title="QR Payment"
-                      description="Scan to pay with mobile banking"
-                      icon="📱"
-                      isSelected={checkoutData.paymentMethod === "qr"}
-                      onSelect={(id) => updateCheckoutData({ paymentMethod: id as 'qr' | 'card' })}
-                      processingTime="Instant"
-                    />
-                    <PaymentMethodCard
-                      id="card"
-                      title="Credit Card"
-                      description="Pay securely with your card"
-                      icon="💳"
-                      isSelected={checkoutData.paymentMethod === "card"}
-                      onSelect={(id) => updateCheckoutData({ paymentMethod: id as 'qr' | 'card' })}
-                      processingTime="2-3 minutes"
-                    />
-                  </div>
-                </div>
-
-                {/* Submit Button */}
-                <div style={{ textAlign: "center", marginBottom: "30px" }}>
-                  <Button
-                    variant="primary"
-                    onClick={handleCheckout}
-                    icon="fa-solid fa-lock"
-                    fullWidth={false}
-                    style={{ padding: "16px 48px", fontSize: "18px" }}
-                  >
-                    {t("proceedToPayment")}
-                  </Button>
-                </div>
               </div>
 
               {/* Order Summary Sidebar */}
               <div className="col-lg-4">
-                <div style={{ position: 'relative', height: '100%' }}>
+                <div style={{ position: 'sticky', top: '20px' }}>
                   <OrderSummary
                     packageItem={orderSummary.packageItem}
                     addOns={orderSummary.addOns}
@@ -472,6 +428,52 @@ export default function Registration() {
                       updateCheckoutData({ selectedAddOns: newAddOns });
                     }}
                   />
+
+                  {/* Payment Method Section */}
+                  <div style={{
+                    backgroundColor: "#fff",
+                    padding: "24px",
+                    borderRadius: "16px",
+                    boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+                    marginTop: "20px"
+                  }}>
+                    <h3 style={{ fontSize: "18px", fontWeight: "700", marginBottom: "16px", color: "#1a1a2e" }}>
+                      {t("paymentMethod")}
+                    </h3>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                      <PaymentMethodCard
+                        id="qr"
+                        title="QR Payment"
+                        description="Scan to pay with mobile banking"
+                        icon="📱"
+                        isSelected={checkoutData.paymentMethod === "qr"}
+                        onSelect={(id) => updateCheckoutData({ paymentMethod: id as 'qr' | 'card' })}
+                        processingTime="Instant"
+                      />
+                      <PaymentMethodCard
+                        id="card"
+                        title="Credit Card"
+                        description="Pay securely with your card"
+                        icon="💳"
+                        isSelected={checkoutData.paymentMethod === "card"}
+                        onSelect={(id) => updateCheckoutData({ paymentMethod: id as 'qr' | 'card' })}
+                        processingTime="2-3 minutes"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  <div style={{ marginTop: "20px" }}>
+                    <Button
+                      variant="primary"
+                      onClick={handleCheckout}
+                      icon="fa-solid fa-lock"
+                      fullWidth={true}
+                      style={{ padding: "16px 24px", fontSize: "16px" }}
+                    >
+                      {t("proceedToPayment")}
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
