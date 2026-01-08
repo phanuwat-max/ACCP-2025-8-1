@@ -817,7 +817,11 @@
     "addOnsOptional": "Add-Ons (Optional)",
     "orderSummary": "Order Summary",
     "registration": "Registration",
-    "addOns": "Add-Ons",
+    "addOnsTitle": "Add-Ons",
+    "addOns": {
+      "workshop": "Pre-conference Workshop",
+      "gala": "Gala Dinner"
+    },
     "totalAmount": "Total Amount",
     "personalDetails": "Personal Details",
     "paymentMethod": "Payment Method",
