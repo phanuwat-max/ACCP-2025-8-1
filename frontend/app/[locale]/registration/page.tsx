@@ -45,11 +45,11 @@ export default function Registration() {
                                 background: isThai ? 'linear-gradient(135deg, #1a237e 0%, #3949ab 100%)' : 'linear-gradient(135deg, #FF6F00 0%, #FFB300 100%)',
                                 padding: '20px 30px',
                                 borderRadius: '15px',
-                                color: '#fff',
+                                color: '#fff !important' as any,
                                 textAlign: 'center',
                                 boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
                             }}>
-                                <p style={{ margin: 0, fontSize: '16px' }}>
+                                <p style={{ margin: 0, fontSize: '16px', color: '#fff !important' as any }}>
                                     <i className="fa-solid fa-user-check" style={{ marginRight: '10px' }} />
                                     <strong>
                                         {isThai
@@ -58,7 +58,7 @@ export default function Registration() {
                                         }
                                     </strong>
                                 </p>
-                                <p style={{ margin: '5px 0 0 0', fontSize: '13px', opacity: 0.9 }}>
+                                <p style={{ margin: '5px 0 0 0', fontSize: '13px', opacity: 0.9, color: 'rgba(255,255,255,0.9) !important' as any }}>
                                     {isStudent
                                         ? (isThai ? 'ประเภท: นักศึกษาไทย' : 'Type: International Student')
                                         : (isThai ? 'ประเภท: เภสัชกรไทย' : 'Type: International Pharmacist')
