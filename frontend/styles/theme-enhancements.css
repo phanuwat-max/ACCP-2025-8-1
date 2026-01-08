@@ -695,3 +695,63 @@ span.text-white-important,
   transform: translateY(-2px);
   background: rgba(255, 255, 255, 0.15);
 }
+
+/* ===== CLICK-BASED DROPDOWN MENU ===== */
+/* Disable hover-based dropdown menu - use click only */
+/* Hide dropdown on hover for items without dropdown-open class */
+.homepage1-body .header-area.homepage1 .main-menu ul > li:not(.dropdown-open):hover > ul.dropdown-padding,
+.header-area.homepage1 .main-menu ul > li:not(.dropdown-open):hover > ul.dropdown-padding,
+.homepage1-body .header-area.homepage1 .header-elements .main-menu ul li:not(.dropdown-open):hover ul.dropdown-padding,
+.header-area.homepage1 .header-elements .main-menu ul li:not(.dropdown-open):hover ul.dropdown-padding {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  display: none !important;
+}
+
+/* CRITICAL: Force show dropdown when has .dropdown-open class - override ALL states */
+.homepage1-body .header-area.homepage1 .main-menu ul > li.dropdown-open ul.dropdown-padding,
+.header-area.homepage1 .main-menu ul > li.dropdown-open ul.dropdown-padding,
+.homepage1-body .header-area.homepage1 .header-elements .main-menu ul li.dropdown-open ul.dropdown-padding,
+.header-area.homepage1 .header-elements .main-menu ul li.dropdown-open ul.dropdown-padding,
+.main-menu ul li.dropdown-open ul.dropdown-padding,
+li.dropdown-open ul.dropdown-padding,
+.dropdown-open > ul.dropdown-padding {
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  display: block !important;
+  position: absolute !important;
+  top: 50px !important;
+  z-index: 9999 !important;
+  background: #fff !important;
+  box-shadow: rgb(0 0 0 / 20%) 0px 20px 30px !important;
+  border-radius: 5px !important;
+  padding: 15px !important;
+  width: 225px !important;
+}
+
+/* Override the original :hover behavior completely */
+.homepage1-body .header-area.homepage1 .header-elements .main-menu ul li:hover ul.dropdown-padding {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  display: none !important;
+}
+
+/* But if it has dropdown-open, always show - even when not hovering */
+.homepage1-body .header-area.homepage1 .header-elements .main-menu ul li.dropdown-open ul.dropdown-padding,
+.homepage1-body .header-area.homepage1 .header-elements .main-menu ul li.dropdown-open:hover ul.dropdown-padding,
+.homepage1-body .header-area.homepage1 .header-elements .main-menu ul li.dropdown-open:not(:hover) ul.dropdown-padding {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  pointer-events: auto !important;
+}
+
+/* Style the dropdown parent text when open */
+.homepage1-body .header-area.homepage1 .main-menu ul > li.dropdown-open > a,
+.header-area.homepage1 .main-menu ul > li.dropdown-open > a,
+.main-menu ul > li.dropdown-open > a {
+  color: #FFBA00 !important;
+}
+

@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
@@ -10,6 +11,7 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
     const locale = useLocale();
     const pathname = usePathname();
     const { isAuthenticated } = useAuth();
+    const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
     // Function to get the path without locale prefix
     const getPathWithoutLocale = () => {
@@ -31,8 +33,43 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
         return pathname.startsWith(path);
     }
 
+    // Toggle dropdown function
+    const toggleDropdown = (menuName: string, e: React.MouseEvent) => {
+        e.preventDefault();
+        setOpenDropdown(openDropdown === menuName ? null : menuName);
+    }
+
+    // Dropdown styles - completely override CSS hover
+    const getDropdownStyle = (menuName: string): React.CSSProperties => {
+        const isOpen = openDropdown === menuName;
+        return {
+            visibility: isOpen ? 'visible' : 'hidden',
+            opacity: isOpen ? 1 : 0,
+            position: 'absolute',
+            top: isOpen ? '50px' : '100px',
+            zIndex: 9,
+            transition: 'all 0.3s ease-in-out',
+            pointerEvents: isOpen ? 'auto' : 'none',
+        };
+    };
+
     return (
         <>
+            {/* Override CSS hover for dropdown - click only behavior */}
+            <style jsx global>{`
+                .header-area.homepage1 .main-menu ul > li:hover > ul.dropdown-padding {
+                    visibility: hidden !important;
+                    opacity: 0 !important;
+                    pointer-events: none !important;
+                }
+                .header-area.homepage1 .main-menu ul > li.dropdown-open > ul.dropdown-padding {
+                    visibility: visible !important;
+                    opacity: 1 !important;
+                    pointer-events: auto !important;
+                    top: 50px !important;
+                    z-index: 9 !important;
+                }
+            `}</style>
             <header>
                 <div className={`header-area homepage1 header header-sticky d-none d-lg-block ${scroll ? 'sticky' : ''}`} id="header">
                     <div className="container-fluid">
@@ -52,16 +89,28 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
                                     <div className="main-menu">
                                         <ul>
                                             <li><Link href={`/${locale}`} style={{ color: isActive(`/${locale}`) ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}`) ? '600' : 'normal' }}>{t('home')}</Link></li>
-                                            <li>
-                                                <Link href={`/${locale}/about`} style={{ color: isActive(`/${locale}/about`) || isActive(`/${locale}/welcome-messages`) ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/about`) || isActive(`/${locale}/welcome-messages`) ? '600' : 'normal' }}>{t('about')} <i className="fa-solid fa-angle-down" /></Link>
-                                                <ul className="dropdown-padding">
+                                            <li className={openDropdown === 'about' ? 'dropdown-open' : ''}>
+                                                <a 
+                                                    href="#" 
+                                                    onClick={(e) => toggleDropdown('about', e)}
+                                                    style={{ color: isActive(`/${locale}/about`) || isActive(`/${locale}/welcome-messages`) || openDropdown === 'about' ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/about`) || isActive(`/${locale}/welcome-messages`) ? '600' : 'normal', cursor: 'pointer' }}
+                                                >
+                                                    {t('about')} <i className={`fa-solid ${openDropdown === 'about' ? 'fa-angle-up' : 'fa-angle-down'}`} />
+                                                </a>
+                                                <ul className="dropdown-padding" style={getDropdownStyle('about')}>
                                                     <li><Link href={`/${locale}/about`}>{t('aboutACCP')}</Link></li>
                                                     <li><Link href={`/${locale}/welcome-messages`}>{t('welcomeMessages')}</Link></li>
                                                 </ul>
                                             </li>
-                                            <li>
-                                                <Link href={`/${locale}/program`} style={{ color: isActive(`/${locale}/program`) || isActive(`/${locale}/gala-dinner`) || isActive(`/${locale}/preconference-workshops`) ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/program`) || isActive(`/${locale}/gala-dinner`) || isActive(`/${locale}/preconference-workshops`) ? '600' : 'normal' }}>{t('program')} <i className="fa-solid fa-angle-down" /></Link>
-                                                <ul className="dropdown-padding">
+                                            <li className={openDropdown === 'program' ? 'dropdown-open' : ''}>
+                                                <a 
+                                                    href="#" 
+                                                    onClick={(e) => toggleDropdown('program', e)}
+                                                    style={{ color: isActive(`/${locale}/program`) || isActive(`/${locale}/gala-dinner`) || isActive(`/${locale}/preconference-workshops`) || openDropdown === 'program' ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/program`) || isActive(`/${locale}/gala-dinner`) || isActive(`/${locale}/preconference-workshops`) ? '600' : 'normal', cursor: 'pointer' }}
+                                                >
+                                                    {t('program')} <i className={`fa-solid ${openDropdown === 'program' ? 'fa-angle-up' : 'fa-angle-down'}`} />
+                                                </a>
+                                                <ul className="dropdown-padding" style={getDropdownStyle('program')}>
                                                     <li><Link href={`/${locale}/program`}>{t('programOverview')}</Link></li>
                                                     <li><Link href={`/${locale}/program-plenary`}>{t('plenaryKeynotes')}</Link></li>
                                                     <li><Link href={`/${locale}/program-symposia`}>{t('symposia')}</Link></li>
@@ -70,30 +119,54 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
                                                     <li><Link href={`/${locale}/preconference-workshops`}>{t('workshops')}</Link></li>
                                                 </ul>
                                             </li>
-                                            <li>
-                                                <Link href={`/${locale}/call-for-abstracts`} style={{ color: isActive(`/${locale}/call-for-abstracts`) || isActive(`/${locale}/abstract-submission-guideline`) ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/call-for-abstracts`) || isActive(`/${locale}/abstract-submission-guideline`) ? '600' : 'normal' }}>{t('callForAbstracts')} <i className="fa-solid fa-angle-down" /></Link>
-                                                <ul className="dropdown-padding">
+                                            <li className={openDropdown === 'abstracts' ? 'dropdown-open' : ''}>
+                                                <a 
+                                                    href="#" 
+                                                    onClick={(e) => toggleDropdown('abstracts', e)}
+                                                    style={{ color: isActive(`/${locale}/call-for-abstracts`) || isActive(`/${locale}/abstract-submission-guideline`) || openDropdown === 'abstracts' ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/call-for-abstracts`) || isActive(`/${locale}/abstract-submission-guideline`) ? '600' : 'normal', cursor: 'pointer' }}
+                                                >
+                                                    {t('callForAbstracts')} <i className={`fa-solid ${openDropdown === 'abstracts' ? 'fa-angle-up' : 'fa-angle-down'}`} />
+                                                </a>
+                                                <ul className="dropdown-padding" style={getDropdownStyle('abstracts')}>
                                                     <li><Link href={`/${locale}/abstract-submission-guideline`}>{t('abstractGuideline')}</Link></li>
                                                     <li><Link href={`/${locale}/call-for-abstracts`}>{t('callForAbstracts')}</Link></li>
                                                 </ul>
                                             </li>
-                                            <li>
-                                                <Link href={`/${locale}/registration`} style={{ color: isActive(`/${locale}/registration`) ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/registration`) ? '600' : 'normal' }}>{t('registration')} <i className="fa-solid fa-angle-down" /></Link>
-                                                <ul className="dropdown-padding">
+                                            <li className={openDropdown === 'registration' ? 'dropdown-open' : ''}>
+                                                <a 
+                                                    href="#" 
+                                                    onClick={(e) => toggleDropdown('registration', e)}
+                                                    style={{ color: isActive(`/${locale}/registration`) || openDropdown === 'registration' ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/registration`) ? '600' : 'normal', cursor: 'pointer' }}
+                                                >
+                                                    {t('registration')} <i className={`fa-solid ${openDropdown === 'registration' ? 'fa-angle-up' : 'fa-angle-down'}`} />
+                                                </a>
+                                                <ul className="dropdown-padding" style={getDropdownStyle('registration')}>
                                                     <li><Link href={`/${locale}/registration`}>{t('registrationInfo')}</Link></li>
                                                     <li><Link href={`/${locale}/registration-policies`}>{t('policies')}</Link></li>
                                                 </ul>
                                             </li>
-                                            <li>
-                                                <Link href={`/${locale}/accommodation`} style={{ color: isActive(`/${locale}/accommodation`) || isActive(`/${locale}/travel-visa`) ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/accommodation`) || isActive(`/${locale}/travel-visa`) ? '600' : 'normal' }}>{t('travelAccommodation')} <i className="fa-solid fa-angle-down" /></Link>
-                                                <ul className="dropdown-padding">
+                                            <li className={openDropdown === 'travel' ? 'dropdown-open' : ''}>
+                                                <a 
+                                                    href="#" 
+                                                    onClick={(e) => toggleDropdown('travel', e)}
+                                                    style={{ color: isActive(`/${locale}/accommodation`) || isActive(`/${locale}/travel-visa`) || openDropdown === 'travel' ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/accommodation`) || isActive(`/${locale}/travel-visa`) ? '600' : 'normal', cursor: 'pointer' }}
+                                                >
+                                                    {t('travelAccommodation')} <i className={`fa-solid ${openDropdown === 'travel' ? 'fa-angle-up' : 'fa-angle-down'}`} />
+                                                </a>
+                                                <ul className="dropdown-padding" style={getDropdownStyle('travel')}>
                                                     <li><Link href={`/${locale}/accommodation`}>{t('hotelsRates')}</Link></li>
                                                     <li><Link href={`/${locale}/travel-visa`}>{t('travelVisa')}</Link></li>
                                                 </ul>
                                             </li>
-                                            <li>
-                                                <Link href={`/${locale}/sponsorship`} style={{ color: isActive(`/${locale}/sponsorship`) || isActive(`/${locale}/gallery`) || isActive(`/${locale}/contact`) ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/sponsorship`) || isActive(`/${locale}/gallery`) || isActive(`/${locale}/contact`) ? '600' : 'normal' }}>{t('more')} <i className="fa-solid fa-angle-down" /></Link>
-                                                <ul className="dropdown-padding">
+                                            <li className={openDropdown === 'more' ? 'dropdown-open' : ''}>
+                                                <a 
+                                                    href="#" 
+                                                    onClick={(e) => toggleDropdown('more', e)}
+                                                    style={{ color: isActive(`/${locale}/sponsorship`) || isActive(`/${locale}/gallery`) || isActive(`/${locale}/contact`) || openDropdown === 'more' ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/sponsorship`) || isActive(`/${locale}/gallery`) || isActive(`/${locale}/contact`) ? '600' : 'normal', cursor: 'pointer' }}
+                                                >
+                                                    {t('more')} <i className={`fa-solid ${openDropdown === 'more' ? 'fa-angle-up' : 'fa-angle-down'}`} />
+                                                </a>
+                                                <ul className="dropdown-padding" style={getDropdownStyle('more')}>
                                                     <li><Link href={`/${locale}/sponsorship`}>{t('sponsorship')}</Link></li>
                                                     <li><Link href={`/${locale}/gallery`}>{t('gallery')}</Link></li>
                                                     <li><Link href={`/${locale}/contact`}>{t('contact')}</Link></li>
@@ -102,9 +175,9 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
                                         </ul>
                                     </div>
 
-                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
+                                    <div className="btn-area" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                         {/* Language Switcher */}
-                                        <div className="d-none d-lg-flex" style={{ alignItems: 'center', gap: '4px', marginRight: '15px', transform: 'translateY(-5px)' }}>
+                                        <div className="d-none d-lg-flex" style={{ alignItems: 'center', gap: '4px' }}>
                                             <Link
                                                 href={`/th${getPathWithoutLocale()}`}
                                                 style={{
@@ -147,34 +220,32 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
                                             </Link>
                                         </div>
 
-                                        <div className="btn-area" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                            {isAuthenticated ? (
-                                                <UserProfileDropdown />
-                                            ) : (
-                                                <>
-                                                    <Link href={`/${locale}/login`} className="vl-btn1" style={{
-                                                        background: 'transparent',
-                                                        border: '2px solid #fff',
-                                                        color: '#fff',
-                                                        padding: '10px 20px',
-                                                        fontSize: '13px'
-                                                    }}>
-                                                        <i className="fa-solid fa-right-to-bracket" style={{ marginRight: '6px' }} />
-                                                        {t('login')}
-                                                    </Link>
-                                                    <Link href={`/${locale}/signup`} className="vl-btn1" style={{
-                                                        background: 'linear-gradient(135deg, #00C853 0%, #69F0AE 100%)',
-                                                        border: 'none',
-                                                        color: '#fff',
-                                                        padding: '10px 20px',
-                                                        fontSize: '13px'
-                                                    }}>
-                                                        <i className="fa-solid fa-user-plus" style={{ marginRight: '6px' }} />
-                                                        {t('signUp')}
-                                                    </Link>
-                                                </>
-                                            )}
-                                        </div>
+                                        {isAuthenticated ? (
+                                            <UserProfileDropdown />
+                                        ) : (
+                                            <>
+                                                <Link href={`/${locale}/login`} className="vl-btn1" style={{
+                                                    background: 'transparent',
+                                                    border: '2px solid #fff',
+                                                    color: '#fff',
+                                                    padding: '10px 20px',
+                                                    fontSize: '13px'
+                                                }}>
+                                                    <i className="fa-solid fa-right-to-bracket" style={{ marginRight: '6px' }} />
+                                                    {t('login')}
+                                                </Link>
+                                                <Link href={`/${locale}/signup`} className="vl-btn1" style={{
+                                                    background: 'linear-gradient(135deg, #00C853 0%, #69F0AE 100%)',
+                                                    border: 'none',
+                                                    color: '#fff',
+                                                    padding: '10px 20px',
+                                                    fontSize: '13px'
+                                                }}>
+                                                    <i className="fa-solid fa-user-plus" style={{ marginRight: '6px' }} />
+                                                    {t('signUp')}
+                                                </Link>
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                             </div>

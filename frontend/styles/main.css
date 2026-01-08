@@ -9304,7 +9304,7 @@ html {
 	transition: all 0.4s;
 }
 
-.homepage1-body .header-area.homepage1 .header-elements .main-menu ul li:hover ul.dropdown-padding {
+.homepage1-body .header-area.homepage1 .header-elements .main-menu ul li.dropdown-open ul.dropdown-padding {
 	visibility: visible;
 	transition: all 0.5s ease-in-out;
 	opacity: 1;
@@ -9670,12 +9670,12 @@ html {
 	transform: scale(1);
 }
 
-.homepage1-body .header-area.homepage1 .header-elements .main-menu ul li:hover ul.dropdown-padding {
+.homepage1-body .header-area.homepage1 .header-elements .main-menu ul li.dropdown-open ul.dropdown-padding {
 	visibility: visible;
 	transition: all 0.5s ease-in-out;
 	opacity: 1;
 	z-index: 9;
-	top: 201.3%;
+	top: 50px;
 	transform: scale(1);
 	position: absolute;
 	transition: all 0.4s;
