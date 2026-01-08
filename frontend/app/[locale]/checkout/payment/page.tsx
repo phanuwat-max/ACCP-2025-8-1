@@ -12,9 +12,14 @@ export default function Payment() {
 	const tCheckout = useTranslations('checkout');
 	const tCommon = useTranslations('common');
 	const locale = useLocale();
-	const { isAuthenticated } = useAuth();
+	const { isAuthenticated, user } = useAuth();
 	const router = useRouter();
 	const searchParams = useSearchParams();
+
+    // Determine currency based on user type or locale
+    // Logic matches checkout page: text is Thai or user is Thai delegate -> THB
+    const isThai = user?.delegateType?.includes('thai') || locale === 'th';
+    const currencySymbol = isThai ? '฿' : '$';
 
 	// Get payment method from URL, default to 'qr' if not specified
 	const methodParam = searchParams.get('method') as 'qr' | 'card' | null;
@@ -176,7 +181,7 @@ export default function Payment() {
 										</div>
 										<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 											<span style={{ fontWeight: '600' }}>{t('totalAmount')}:</span>
-											<span style={{ fontSize: '20px', fontWeight: 'bold', color: '#00C853' }}>${amount}</span>
+											<span style={{ fontSize: '20px', fontWeight: 'bold', color: '#00C853' }}>{currencySymbol}{amount}</span>
 										</div>
 									</div>
 
@@ -563,7 +568,7 @@ export default function Payment() {
 											{t('totalAmount')}
 										</p>
 										<p style={{ margin: 0, fontSize: '32px', fontWeight: 'bold', color: '#00C853' }}>
-											${amount}
+											{currencySymbol}{amount}
 										</p>
 									</div>
 

@@ -447,7 +447,7 @@ export default function Registration() {
                 </div>
 
                 {/* Submit Button */}
-                <div style={{ textAlign: "center", marginBottom: "30px" }}>
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: "30px" }}>
                   <Button
                     variant="primary"
                     onClick={handleCheckout}
