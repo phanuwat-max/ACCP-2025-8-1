@@ -32,9 +32,9 @@ const registrationPackages: RegistrationPackage[] = [
   {
     id: "student",
     priceUSD: 250,
-    priceTHB: 8500,
+    priceTHB: 4900,
     originalPriceUSD: 270,
-    originalPriceTHB: 9000,
+    originalPriceTHB: 4900,
     features: [
       "Full conference access",
       "Conference materials",
@@ -45,9 +45,9 @@ const registrationPackages: RegistrationPackage[] = [
   {
     id: "professional",
     priceUSD: 385,
-    priceTHB: 13000,
+    priceTHB: 7900,
     originalPriceUSD: 400,
-    originalPriceTHB: 13500,
+    originalPriceTHB: 8900,
     features: [
       "Full conference access",
       "Conference materials",
@@ -63,12 +63,12 @@ const addOns: AddOn[] = [
   {
     id: "workshop",
     priceUSD: 70,
-    priceTHB: 2400,
+    priceTHB: 2100,
   },
   {
     id: "gala",
     priceUSD: 75,
-    priceTHB: 2500,
+    priceTHB: 2200,
   },
 ];
 
@@ -105,7 +105,7 @@ export default function Registration() {
         lastName: user?.lastName || "",
         email: user?.email || "",
         country: user?.country || "",
-        selectedPackage: user?.delegateType === 'foreign_delegates' ? 'professional' : searchParams.get("package") || "professional"
+        selectedPackage: user?.delegateType?.includes('student') ? 'student' : 'professional'
       });
       setIsLoading(false);
     }
