@@ -105,7 +105,7 @@ export default function Registration() {
         lastName: user?.lastName || "",
         email: user?.email || "",
         country: user?.country || "",
-        selectedPackage: user?.delegateType === 'foreign_delegates' ? 'professional' : searchParams.get("package") || "professional"
+        selectedPackage: (user?.delegateType === 'international_student' || user?.delegateType === 'international_pharmacist') ? 'professional' : searchParams.get("package") || "professional"
       });
       setIsLoading(false);
     }
