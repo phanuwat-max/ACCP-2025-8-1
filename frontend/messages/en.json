@@ -124,6 +124,7 @@
     "professionalPriceTHB": "฿7,900",
     "professionalRegularTHB": "฿8,900 Regular"
   },
+
   "contact": {
     "pageTitle": "Contact Us",
     "getInTouch": "Get in Touch",
@@ -876,7 +877,8 @@
       "vegan": "Vegan",
       "halal": "Halal",
       "glutenFree": "Gluten-free",
-      "allergy": "Food Allergies (please specify)"
+      "allergy": "Food Allergies (please specify)",
+      "other": "Other"
     }
   },
   "payment": {
@@ -926,5 +928,40 @@
       "cvvRequired": "CVV is required",
       "cvvInvalid": "Invalid CVV"
     }
-  }
+  },
+  "abstracts": {
+        "title": "Abstract Status",
+        "subtitle": "Track the status of your submitted abstracts",
+        "submitNew": "Submit New Abstract",
+        "yourAbstracts": "Your Abstracts",
+        "totalSubmitted": "Total Submitted",
+        "accepted": "Accepted",
+        "underReview": "Under Review",
+        "pageTitle": "Abstract Status",
+        "pageDescription": "View the status and presentation details of your submitted abstracts",
+        "status": {
+            "accepted": "Accepted",
+            "underReview": "Under Review",
+            "rejected": "Rejected"
+        },
+        "category": {
+            "clinicalPharmacy": "Clinical Pharmacy",
+            "pharmacoeconomics": "Pharmacoeconomics",
+            "socialPharmacy": "Social Pharmacy"
+        },
+        "type": {
+            "oralPresentation": "Oral Presentation",
+            "posterPresentation": "Poster Presentation"
+        },
+        "abstractId": "Abstract ID",
+        "submittedDate": "Submitted Date",
+        "presentationSchedule": "Presentation Schedule",
+        "session": "Session",
+        "room": "Room",
+        "date": "Date",
+        "time": "Time",
+        "reviewerComments": "Reviewer Comments",
+        "viewFullAbstract": "View Full Abstract",
+        "downloadCertificate": "Download Certificate"
+    }
 }

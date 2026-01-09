@@ -124,6 +124,7 @@
         "professionalPriceTHB": "฿7,900",
         "professionalRegularTHB": "฿8,900 ราคาปกติ"
     },
+
     "contact": {
         "pageTitle": "ติดต่อเรา",
         "getInTouch": "ติดต่อเรา",
@@ -876,7 +877,8 @@
             "vegan": "วีแกน (เจ)",
             "halal": "ฮาลาล",
             "glutenFree": "ปราศจากกลูเตน",
-            "allergy": "แพ้อาหาร (โปรดระบุ)"
+            "allergy": "แพ้อาหาร (โปรดระบุ)",
+            "other": "อื่นๆ"
         }
     },
     "payment": {
@@ -926,5 +928,40 @@
             "cvvRequired": "กรุณากรอก CVV",
             "cvvInvalid": "CVV ไม่ถูกต้อง"
         }
+    },
+    "abstracts": {
+        "title": "สถานะบทคัดย่อ",
+        "subtitle": "ติดตามสถานะของบทคัดย่อที่คุณส่ง",
+        "submitNew": "ส่งบทคัดย่อใหม่",
+        "yourAbstracts": "บทคัดย่อของคุณ",
+        "totalSubmitted": "ส่งทั้งหมด",
+        "accepted": "ยอมรับแล้ว",
+        "underReview": "อยู่ระหว่างการตรวจสอบ",
+        "pageTitle": "สถานะบทคัดย่อ",
+        "pageDescription": "ดูสถานะและรายละเอียดการนำเสนอของบทคัดย่อที่คุณส่ง",
+        "status": {
+            "accepted": "ยอมรับแล้ว",
+            "underReview": "อยู่ระหว่างการพิจารณา",
+            "rejected": "ปฏิเสธ"
+        },
+        "category": {
+            "clinicalPharmacy": "เภสัชกรรมคลินิก",
+            "pharmacoeconomics": "เภสัชเศรษฐศาสตร์",
+            "socialPharmacy": "เภสัชกรรมสังคม"
+        },
+        "type": {
+            "oralPresentation": "นำเสนอแบบปากเปล่า",
+            "posterPresentation": "นำเสนอแบบโปสเตอร์"
+        },
+        "abstractId": "รหัสบทคัดย่อ",
+        "submittedDate": "วันที่ส่ง",
+        "presentationSchedule": "กำหนดการนำเสนอ",
+        "session": "เซสชัน",
+        "room": "ห้อง",
+        "date": "วันที่",
+        "time": "เวลา",
+        "reviewerComments": "ความคิดเห็นผู้ตรวจสอบ",
+        "viewFullAbstract": "ดูบทคัดย่อฉบับเต็ม",
+        "downloadCertificate": "ดาวน์โหลดใบรับรอง"
     }
 }
