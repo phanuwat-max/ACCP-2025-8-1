@@ -138,7 +138,9 @@
         "send": "ส่งข้อความ",
         "officeHours": "เวลาทำการ",
         "mondayFriday": "จันทร์ - ศุกร์",
-        "contactInfo": "ข้อมูลติดต่อ"
+        "contactInfo": "ข้อมูลติดต่อ",
+        "location": "สถานที่",
+        "locationName": "สภาเภสัชกรรม"
     },
     "program": {
         "pageTitle": "ภาพรวมกำหนดการ",

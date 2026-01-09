@@ -139,11 +139,10 @@ export default function Footer1() {
 						<div className="col-lg-3 col-md-6">
 							<div className="link-content2">
 								<h3>{t('common.contactUs')}</h3>
-								<ul>
-									<li><Link href="tel:+6621234567"><i className="fa-solid fa-phone" style={{ marginRight: '10px', color: '#34A853' }} />+66 2 123 4567</Link></li>
-									<li><Link href="https://maps.google.com" target="_blank"><i className="fa-solid fa-location-dot" style={{ marginRight: '10px', color: '#EA4335' }} />{t('footer.venue')}</Link></li>
-									<li><Link href="mailto:info@accp2026.org"><i className="fa-solid fa-envelope" style={{ marginRight: '10px', color: '#EA4335' }} />info@accp2026.org</Link></li>
-									<li><Link href="https://accp2026.org"><i className="fa-solid fa-globe" style={{ marginRight: '10px', color: '#4285F4' }} />www.accp2026.org</Link></li>
+								<ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+									<li style={{ marginBottom: '12px' }}><Link href="mailto:accpbangkok2026@gmail.com" style={{ display: 'flex', alignItems: 'center' }}><i className="fa-solid fa-envelope" style={{ width: '20px', marginRight: '10px', color: '#EA4335' }} />accpbangkok2026@gmail.com</Link></li>
+									<li style={{ marginBottom: '12px' }}><Link href="https://facebook.com/accpbangkok2026" target="_blank" style={{ display: 'flex', alignItems: 'center' }}><i className="fa-brands fa-facebook-f" style={{ width: '20px', marginRight: '10px', color: '#1877F2' }} />accpbangkok2026</Link></li>
+									<li><Link href="https://instagram.com/accpbangkok2026" target="_blank" style={{ display: 'flex', alignItems: 'center' }}><i className="fa-brands fa-instagram" style={{ width: '20px', marginRight: '10px', color: '#E4405F' }} />accpbangkok2026</Link></li>
 								</ul>
 							</div>
 						</div>
