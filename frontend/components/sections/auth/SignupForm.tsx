@@ -342,12 +342,12 @@ export default function SignupForm() {
                 {(activeTab === 'thaiStudent' || activeTab === 'internationalStudent') && (
                     <div style={{ marginBottom: '16px' }}>
                         <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '6px' }}>
-                            {locale === 'th' ? 'เอกสารยืนยันความเป็นนักศึกษา (PDF)' : 'Student Verification Document (PDF)'} <span style={{ color: '#e53935' }}>*</span>
+                            {locale === 'th' ? 'เอกสารยืนยันความเป็นนักศึกษา (PDF, JPG, PNG)' : 'Student Verification Document (PDF, JPG, PNG)'} <span style={{ color: '#e53935' }}>*</span>
                         </label>
                         <input 
                             id="student-doc-input"
                             type="file" 
-                            accept=".pdf" 
+                            accept=".pdf,.jpg,.jpeg,.png" 
                             onChange={(e) => setStudentDocument(e.target.files?.[0] || null)}
                             required 
                             style={{ display: 'none' }} 
@@ -379,7 +379,7 @@ export default function SignupForm() {
                             {studentDocument ? studentDocument.name : (locale === 'th' ? '📁 เลือกไฟล์' : '📁 Choose File')}
                         </button>
                         <p style={{ fontSize: '12px', color: '#888', marginTop: '4px' }}>
-                            {locale === 'th' ? 'อัพโหลดใบรับรองนักศึกษา หรือเอกสารที่เกี่ยวข้อง (ไฟล์ PDF เท่านั้น)' : 'Upload student certificate or related document (PDF only)'}
+                            {locale === 'th' ? 'อัพโหลดใบรับรองนักศึกษา หรือเอกสารที่เกี่ยวข้อง (PDF, JPG, PNG)' : 'Upload student certificate or related document (PDF, JPG, PNG)'}
                         </p>
                     </div>
                 )}
