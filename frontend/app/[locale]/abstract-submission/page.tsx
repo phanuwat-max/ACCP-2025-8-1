@@ -88,7 +88,7 @@ export default function AbstractSubmission() {
                 results: name === 'results' ? value : formData.results,
                 conclusions: name === 'conclusions' ? value : formData.conclusions
             }
-            
+
             // Calculate total words from all sections
             const totalText = [
                 updatedData.background,
@@ -96,7 +96,7 @@ export default function AbstractSubmission() {
                 updatedData.results,
                 updatedData.conclusions
             ].join(' ')
-            
+
             const words = totalText.trim().split(/\s+/).filter(word => word.length > 0)
             setWordCount(words.length)
         }
