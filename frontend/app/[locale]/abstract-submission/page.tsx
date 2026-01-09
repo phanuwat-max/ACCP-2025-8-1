@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Layout from "@/components/layout/Layout"
 import Link from "next/link"
 import { useTranslations } from 'next-intl'
@@ -12,12 +12,10 @@ export default function AbstractSubmission() {
     const categories = [
         t('categories.clinicalPharmacy'),
         t('categories.socialAdministrative'),
+        t('categories.pharmaceuticalSciences'),
         t('categories.pharmacology'),
-        t('categories.pharmacoeconomics'),
         t('categories.education'),
-        t('categories.pharmaceutics'),
-        t('categories.medicinalChemistry'),
-        t('categories.pharmacognosy')
+        t('categories.digitalPharmacy')
     ]
 
     const presentationTypes = [
@@ -40,9 +38,6 @@ export default function AbstractSubmission() {
         presentationType: '',
         keywords: '',
 
-        // Co-Authors
-        coAuthors: '',
-
         // Abstract Content
         background: '',
         methods: '',
@@ -59,9 +54,47 @@ export default function AbstractSubmission() {
         confirmOriginal: false
     })
 
+    // Co-Authors state - separate for easier management
+    const [coAuthors, setCoAuthors] = useState<Array<{
+        id: string;
+        firstName: string;
+        lastName: string;
+        email: string;
+        institution: string;
+        country: string;
+    }>>([])
+
+    const addCoAuthor = () => {
+        setCoAuthors([...coAuthors, {
+            id: `coauthor-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+            firstName: '',
+            lastName: '',
+            email: '',
+            institution: '',
+            country: ''
+        }])
+    }
+
+    const removeCoAuthor = (id: string) => {
+        setCoAuthors(coAuthors.filter((author) => author.id !== id))
+    }
+
+    const handleCoAuthorChange = (id: string, field: string, value: string) => {
+        setCoAuthors(coAuthors.map(author =>
+            author.id === id ? { ...author, [field]: value } : author
+        ))
+    }
+
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
     const [wordCount, setWordCount] = useState(0)
+
+    // Scroll to top when form is submitted successfully
+    useEffect(() => {
+        if (submitStatus === 'success') {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+    }, [submitStatus])
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target
@@ -88,7 +121,7 @@ export default function AbstractSubmission() {
                 results: name === 'results' ? value : formData.results,
                 conclusions: name === 'conclusions' ? value : formData.conclusions
             }
-            
+
             // Calculate total words from all sections
             const totalText = [
                 updatedData.background,
@@ -96,23 +129,44 @@ export default function AbstractSubmission() {
                 updatedData.results,
                 updatedData.conclusions
             ].join(' ')
-            
+
             const words = totalText.trim().split(/\s+/).filter(word => word.length > 0)
             setWordCount(words.length)
         }
     }
 
+    // Multiple files state
+    const [uploadedFiles, setUploadedFiles] = useState<Array<{
+        id: string;
+        file: File;
+    }>>([])
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null
         if (file) {
-            const validTypes = ['.doc', '.docx']
+            const validTypes = ['.pdf']
             const fileExtension = file.name.substring(file.name.lastIndexOf('.'))
             if (!validTypes.includes(fileExtension.toLowerCase())) {
-                alert('Please upload only .doc or .docx files')
+                alert('Please upload only PDF files')
                 return
             }
-            setFormData(prev => ({ ...prev, abstractFile: file }))
+            // Check for duplicate filename
+            const isDuplicate = uploadedFiles.some(f => f.file.name === file.name)
+            if (isDuplicate) {
+                alert('This file has already been uploaded!')
+                return
+            }
+            setUploadedFiles(prev => [...prev, {
+                id: `file-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                file: file
+            }])
+            // Reset input value to allow re-selecting the same file
+            e.target.value = ''
         }
+    }
+
+    const removeFile = (id: string) => {
+        setUploadedFiles(prev => prev.filter(f => f.id !== id))
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -149,6 +203,27 @@ export default function AbstractSubmission() {
         fontSize: '15px',
         transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
         outline: 'none'
+    }
+
+    const selectStyle = {
+        width: '100%',
+        padding: '14px 40px 14px 16px',
+        border: '2px solid #e0e0e0',
+        borderRadius: '10px',
+        fontSize: '15px',
+        fontWeight: '500' as const,
+        color: '#1a1a2e',
+        backgroundColor: '#fff',
+        cursor: 'pointer',
+        appearance: 'none' as const,
+        WebkitAppearance: 'none' as const,
+        MozAppearance: 'none' as const,
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23FFBA00' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'right 14px center',
+        backgroundSize: '18px',
+        transition: 'all 0.3s ease',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.04)'
     }
 
     const labelStyle = {
@@ -215,10 +290,89 @@ export default function AbstractSubmission() {
                                         <p style={{ color: '#999', fontSize: '14px', marginBottom: '32px' }}>
                                             {t('trackingId')} <strong style={{ color: '#FFBA00' }}>ACCP2026-{Date.now().toString().slice(-6)}</strong>
                                         </p>
-                                        <div className="btn-area1">
-                                            <Link href="/" className="vl-btn1">{t('returnHome')}</Link>
-                                            <Link href="/call-for-abstracts" className="vl-btn2" style={{ marginLeft: '16px' }}>{t('viewGuidelines')}</Link>
+                                    </div>
+
+                                    {/* Submission Summary */}
+                                    <div style={{ textAlign: 'left', marginTop: '30px' }}>
+                                        {/* Author Information */}
+                                        <div style={{ backgroundColor: '#f8f9fa', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
+                                            <h4 style={{ color: '#1a1a2e', marginBottom: '16px', borderBottom: '2px solid #FFBA00', paddingBottom: '8px' }}>
+                                                <i className="fa-solid fa-user" style={{ marginRight: '10px', color: '#FFBA00' }} />
+                                                Author Information
+                                            </h4>
+                                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', fontSize: '14px' }}>
+                                                <p><strong>Name:</strong> {formData.firstName} {formData.lastName}</p>
+                                                <p><strong>Email:</strong> {formData.email}</p>
+                                                <p><strong>Phone:</strong> {formData.phone}</p>
+                                                <p><strong>Institution:</strong> {formData.affiliation}</p>
+                                                <p><strong>Country:</strong> {formData.country}</p>
+                                            </div>
                                         </div>
+
+                                        {/* Co-Authors */}
+                                        {coAuthors.length > 0 && (
+                                            <div style={{ backgroundColor: '#f8f9fa', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
+                                                <h4 style={{ color: '#1a1a2e', marginBottom: '16px', borderBottom: '2px solid #FFBA00', paddingBottom: '8px' }}>
+                                                    <i className="fa-solid fa-users" style={{ marginRight: '10px', color: '#FFBA00' }} />
+                                                    Co-Authors ({coAuthors.length})
+                                                </h4>
+                                                {coAuthors.map((author, index) => (
+                                                    <div key={author.id} style={{ padding: '10px', backgroundColor: '#fff', borderRadius: '8px', marginBottom: '8px', fontSize: '14px' }}>
+                                                        <strong>{index + 1}. {author.firstName} {author.lastName}</strong>
+                                                        <span style={{ color: '#666', marginLeft: '12px' }}>{author.email}</span>
+                                                        <span style={{ color: '#999', marginLeft: '12px' }}>({author.institution}, {author.country})</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+
+                                        {/* Abstract Details */}
+                                        <div style={{ backgroundColor: '#f8f9fa', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
+                                            <h4 style={{ color: '#1a1a2e', marginBottom: '16px', borderBottom: '2px solid #FFBA00', paddingBottom: '8px' }}>
+                                                <i className="fa-solid fa-file-alt" style={{ marginRight: '10px', color: '#FFBA00' }} />
+                                                Abstract Details
+                                            </h4>
+                                            <div style={{ fontSize: '14px' }}>
+                                                <p><strong>Title:</strong> {formData.title}</p>
+                                                <p><strong>Category:</strong> {formData.category}</p>
+                                                <p><strong>Presentation Type:</strong> {formData.presentationType}</p>
+                                            </div>
+                                        </div>
+
+                                        {/* Abstract Content */}
+                                        <div style={{ backgroundColor: '#f8f9fa', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
+                                            <h4 style={{ color: '#1a1a2e', marginBottom: '16px', borderBottom: '2px solid #FFBA00', paddingBottom: '8px' }}>
+                                                <i className="fa-solid fa-align-left" style={{ marginRight: '10px', color: '#FFBA00' }} />
+                                                Abstract Content
+                                            </h4>
+                                            <div style={{ fontSize: '14px' }}>
+                                                {formData.background && <p><strong>Background:</strong> {formData.background.substring(0, 200)}...</p>}
+                                                {formData.methods && <p><strong>Methods:</strong> {formData.methods.substring(0, 200)}...</p>}
+                                                {formData.results && <p><strong>Results:</strong> {formData.results.substring(0, 200)}...</p>}
+                                                {formData.conclusions && <p><strong>Conclusions:</strong> {formData.conclusions.substring(0, 200)}...</p>}
+                                            </div>
+                                        </div>
+
+                                        {/* Uploaded Files */}
+                                        {uploadedFiles.length > 0 && (
+                                            <div style={{ backgroundColor: '#f8f9fa', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
+                                                <h4 style={{ color: '#1a1a2e', marginBottom: '16px', borderBottom: '2px solid #FFBA00', paddingBottom: '8px' }}>
+                                                    <i className="fa-solid fa-file-pdf" style={{ marginRight: '10px', color: '#FFBA00' }} />
+                                                    Uploaded Files ({uploadedFiles.length})
+                                                </h4>
+                                                {uploadedFiles.map((f, index) => (
+                                                    <p key={f.id} style={{ fontSize: '14px', color: '#2e7d32' }}>
+                                                        <i className="fa-solid fa-check-circle" style={{ marginRight: '8px' }} />
+                                                        {index + 1}. {f.file.name}
+                                                    </p>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div className="btn-area1" style={{ textAlign: 'center', marginTop: '30px' }}>
+                                        <Link href="/" className="vl-btn1">{t('returnHome')}</Link>
+                                        <Link href="/call-for-abstracts" className="vl-btn2" style={{ marginLeft: '16px' }}>{t('viewGuidelines')}</Link>
                                     </div>
                                 </div>
                             </div>
@@ -374,19 +528,132 @@ export default function AbstractSubmission() {
                                             {t('section2Title')}
                                         </h3>
 
-                                        <div style={{ marginBottom: '20px' }}>
-                                            <label style={labelStyle}>{t('coAuthors')}</label>
-                                            <textarea
-                                                name="coAuthors"
-                                                value={formData.coAuthors}
-                                                onChange={handleInputChange}
-                                                style={{ ...inputStyle, minHeight: '100px', resize: 'vertical' }}
-                                                placeholder={t('coAuthorsPlaceholder')}
-                                            />
-                                            <p style={{ marginTop: '8px', fontSize: '13px', color: '#666' }}>
-                                                {t('coAuthorsNote')}
+                                        {coAuthors.length === 0 ? (
+                                            <p style={{ color: '#666', marginBottom: '16px', fontSize: '14px' }}>
+                                                <i className="fa-solid fa-info-circle" style={{ marginRight: '8px' }} />
+                                                คลิกปุ่มด้านล่างเพื่อเพิ่มผู้เขียนร่วม (ถ้ามี)
                                             </p>
-                                        </div>
+                                        ) : (
+                                            coAuthors.map((coAuthor, index) => (
+                                                <div key={coAuthor.id} style={{
+                                                    backgroundColor: '#f8f9fa',
+                                                    padding: '20px',
+                                                    borderRadius: '12px',
+                                                    marginBottom: '16px',
+                                                    border: '1px solid #e0e0e0'
+                                                }}>
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                                                        <h5 style={{ margin: 0, color: '#1a1a2e', fontSize: '16px' }}>
+                                                            <i className="fa-solid fa-user" style={{ marginRight: '8px', color: '#FFBA00' }} />
+                                                            Co-Author {index + 1}
+                                                        </h5>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => removeCoAuthor(coAuthor.id)}
+                                                            style={{
+                                                                background: 'none',
+                                                                border: 'none',
+                                                                color: '#f44336',
+                                                                cursor: 'pointer',
+                                                                fontSize: '14px'
+                                                            }}
+                                                        >
+                                                            <i className="fa-solid fa-trash" style={{ marginRight: '4px' }} />
+                                                            Remove
+                                                        </button>
+                                                    </div>
+
+                                                    <div className="row">
+                                                        <div className="col-md-4">
+                                                            <div style={{ marginBottom: '12px' }}>
+                                                                <label style={labelStyle}>First Name *</label>
+                                                                <input
+                                                                    type="text"
+                                                                    value={coAuthor.firstName}
+                                                                    onChange={(e) => handleCoAuthorChange(coAuthor.id, 'firstName', e.target.value)}
+                                                                    style={inputStyle}
+                                                                    placeholder="Enter first name"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-4">
+                                                            <div style={{ marginBottom: '12px' }}>
+                                                                <label style={labelStyle}>Last Name *</label>
+                                                                <input
+                                                                    type="text"
+                                                                    value={coAuthor.lastName}
+                                                                    onChange={(e) => handleCoAuthorChange(coAuthor.id, 'lastName', e.target.value)}
+                                                                    style={inputStyle}
+                                                                    placeholder="Enter last name"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-4">
+                                                            <div style={{ marginBottom: '12px' }}>
+                                                                <label style={labelStyle}>Email *</label>
+                                                                <input
+                                                                    type="email"
+                                                                    value={coAuthor.email}
+                                                                    onChange={(e) => handleCoAuthorChange(coAuthor.id, 'email', e.target.value)}
+                                                                    style={inputStyle}
+                                                                    placeholder="email@example.com"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="row">
+                                                        <div className="col-md-8">
+                                                            <div style={{ marginBottom: '12px' }}>
+                                                                <label style={labelStyle}>Institution *</label>
+                                                                <input
+                                                                    type="text"
+                                                                    value={coAuthor.institution}
+                                                                    onChange={(e) => handleCoAuthorChange(coAuthor.id, 'institution', e.target.value)}
+                                                                    style={inputStyle}
+                                                                    placeholder="University / Hospital / Organization"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-4">
+                                                            <div style={{ marginBottom: '12px' }}>
+                                                                <label style={labelStyle}>Country *</label>
+                                                                <input
+                                                                    type="text"
+                                                                    value={coAuthor.country}
+                                                                    onChange={(e) => handleCoAuthorChange(coAuthor.id, 'country', e.target.value)}
+                                                                    style={inputStyle}
+                                                                    placeholder="Country"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        )}
+
+                                        <button
+                                            type="button"
+                                            onClick={addCoAuthor}
+                                            style={{
+                                                backgroundColor: '#e8f5e9',
+                                                color: '#2e7d32',
+                                                border: '2px dashed #4caf50',
+                                                padding: '14px 24px',
+                                                borderRadius: '8px',
+                                                cursor: 'pointer',
+                                                fontSize: '14px',
+                                                fontWeight: '600',
+                                                width: '100%',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                gap: '8px'
+                                            }}
+                                        >
+                                            <i className="fa-solid fa-plus" />
+                                            Add Co-Author
+                                        </button>
                                     </div>
 
                                     {/* Section 3: Abstract Details */}
@@ -417,7 +684,7 @@ export default function AbstractSubmission() {
                                                         name="category"
                                                         value={formData.category}
                                                         onChange={handleInputChange}
-                                                        style={inputStyle}
+                                                        style={selectStyle}
                                                         required
                                                     >
                                                         <option value="">{t('selectCategory')}</option>
@@ -434,7 +701,7 @@ export default function AbstractSubmission() {
                                                         name="presentationType"
                                                         value={formData.presentationType}
                                                         onChange={handleInputChange}
-                                                        style={inputStyle}
+                                                        style={selectStyle}
                                                         required
                                                     >
                                                         <option value="">{t('selectPresentationType')}</option>
@@ -539,7 +806,7 @@ export default function AbstractSubmission() {
                                             </p>
                                             <input
                                                 type="file"
-                                                accept=".doc,.docx"
+                                                accept=".pdf"
                                                 onChange={handleFileChange}
                                                 style={{ display: 'none' }}
                                                 id="abstractFile"
@@ -558,11 +825,55 @@ export default function AbstractSubmission() {
                                             >
                                                 {t('chooseFile')}
                                             </label>
-                                            {formData.abstractFile && (
-                                                <p style={{ marginTop: '16px', color: '#4caf50' }}>
-                                                    <i className="fa-solid fa-check-circle" style={{ marginRight: '8px' }} />
-                                                    {formData.abstractFile.name}
-                                                </p>
+                                            {uploadedFiles.length > 0 && (
+                                                <div style={{ marginTop: '20px', textAlign: 'left' }}>
+                                                    <p style={{ fontWeight: '600', color: '#1a1a2e', marginBottom: '12px' }}>
+                                                        <i className="fa-solid fa-file-pdf" style={{ marginRight: '8px', color: '#FFBA00' }} />
+                                                        Uploaded Files ({uploadedFiles.length})
+                                                    </p>
+                                                    {uploadedFiles.map((f, index) => (
+                                                        <div key={f.id} style={{
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'space-between',
+                                                            backgroundColor: '#e8f5e9',
+                                                            padding: '10px 14px',
+                                                            borderRadius: '8px',
+                                                            marginBottom: '8px'
+                                                        }}>
+                                                            <span
+                                                                onClick={() => {
+                                                                    const url = URL.createObjectURL(f.file)
+                                                                    window.open(url, '_blank')
+                                                                }}
+                                                                style={{
+                                                                    color: '#2e7d32',
+                                                                    fontSize: '14px',
+                                                                    cursor: 'pointer',
+                                                                    textDecoration: 'underline'
+                                                                }}
+                                                                title="Click to view PDF"
+                                                            >
+                                                                <i className="fa-solid fa-check-circle" style={{ marginRight: '8px' }} />
+                                                                {index + 1}. {f.file.name}
+                                                            </span>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => removeFile(f.id)}
+                                                                style={{
+                                                                    background: 'none',
+                                                                    border: 'none',
+                                                                    color: '#f44336',
+                                                                    cursor: 'pointer',
+                                                                    fontSize: '14px'
+                                                                }}
+                                                                title="Remove file"
+                                                            >
+                                                                <i className="fa-solid fa-times" />
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                </div>
                                             )}
                                         </div>
                                     </div>
