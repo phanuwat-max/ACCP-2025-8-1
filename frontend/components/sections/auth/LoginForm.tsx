@@ -5,84 +5,62 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 
-type TabType = 'thaiStudent' | 'internationalStudent' | 'thaiPharmacist' | 'internationalPharmacist';
-
 export default function LoginForm() {
     const t = useTranslations('login');
     const locale = useLocale();
     const router = useRouter();
     const { login } = useAuth();
 
-    const [activeTab, setActiveTab] = useState<TabType>('thaiStudent');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [licenseId, setLicenseId] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
-    // validateThaiId removed - no longer needed for login
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
+        setError('');
 
         try {
             // Validation
-            if (activeTab === 'thaiPharmacist') {
-                // Thai Pharmacist: License Number + Password
-                if (!licenseId || !password) {
-                    alert(locale === 'th' ? 'กรุณากรอกข้อมูลให้ครบถ้วน' : 'Please fill in all fields');
-                    setIsLoading(false);
-                    return;
-                }
-            } else {
-                // Others: Email + Password
-                if (!email || !password) {
-                    alert(locale === 'th' ? 'กรุณากรอกข้อมูลให้ครบถ้วน' : 'Please fill in all fields');
-                    setIsLoading(false);
-                    return;
-                }
+            if (!email || !password) {
+                setError(locale === 'th' ? 'กรุณากรอกข้อมูลให้ครบถ้วน' : 'Please fill in all fields');
+                setIsLoading(false);
+                return;
             }
 
+            // TODO: Replace with actual API call to backend
+            // const response = await fetch('/api/auth/login', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ email, password })
+            // });
+            // const userData = await response.json();
+
+            // Simulate API call (remove when backend is ready)
             await new Promise(resolve => setTimeout(resolve, 1000));
 
-            const userData = {
-                thaiStudent: {
-                    firstName: 'นักศึกษา', lastName: 'ไทย', email, country: 'Thailand',
-                    isThai: true, delegateType: 'thai_student' as const
-                },
-                internationalStudent: {
-                    firstName: 'International', lastName: 'Student', email, country: 'International',
-                    isThai: false, delegateType: 'international_student' as const
-                },
-                thaiPharmacist: {
-                    firstName: 'เภสัชกร', lastName: 'ไทย', email: '', licenseId,
-                    country: 'Thailand', isThai: true, delegateType: 'thai_pharmacist' as const
-                },
-                internationalPharmacist: {
-                    firstName: 'International', lastName: 'Pharmacist', email, country: 'International',
-                    isThai: false, delegateType: 'international_pharmacist' as const
-                }
+            // Mock user data (replace with actual API response)
+            const mockUserData = {
+                firstName: 'User',
+                lastName: 'Name',
+                email: email,
+                country: 'Thailand',
+                isThai: true,
+                delegateType: 'thai_student' as const // Placeholder - Backend will return actual type
             };
 
-            login(userData[activeTab]);
+            login(mockUserData);
             await new Promise(resolve => setTimeout(resolve, 100));
             router.push(`/${locale}`);
-        } catch (error) {
-            console.error('Login error:', error);
+        } catch (err) {
+            console.error('Login error:', err);
+            setError(locale === 'th' ? 'เข้าสู่ระบบไม่สำเร็จ กรุณาลองใหม่อีกครั้ง' : 'Login failed. Please try again.');
         } finally {
             setIsLoading(false);
         }
     };
-
-    const tabs: { id: TabType; label: string; labelTh: string }[] = [
-        { id: 'thaiStudent', label: 'Thai Student', labelTh: 'นักศึกษาไทย' },
-        { id: 'internationalStudent', label: 'International Student', labelTh: 'นศ.ต่างชาติ' },
-        { id: 'thaiPharmacist', label: 'Thai Pharmacist', labelTh: 'เภสัชกรไทย' },
-        { id: 'internationalPharmacist', label: 'Professional & Academician', labelTh: 'ภก.ต่างชาติ' }
-    ];
-
-    const isThai = activeTab === 'thaiStudent' || activeTab === 'thaiPharmacist';
 
     return (
         <div style={{
@@ -90,7 +68,7 @@ export default function LoginForm() {
             borderRadius: '16px',
             padding: '40px',
             boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
-            maxWidth: '440px',
+            maxWidth: '420px',
             margin: '0 auto'
         }}>
             {/* Logo */}
@@ -108,159 +86,95 @@ export default function LoginForm() {
             }}>
                 {locale === 'th' ? 'เข้าสู่ระบบ' : 'Sign In'}
             </h2>
-            <p style={{ textAlign: 'center', color: '#666', fontSize: '14px', marginBottom: '24px' }}>
-                {locale === 'th' ? 'เลือกประเภทผู้ใช้งาน' : 'Select your account type'}
+            <p style={{ textAlign: 'center', color: '#666', fontSize: '14px', marginBottom: '32px' }}>
+                {locale === 'th' ? 'กรอกอีเมลและรหัสผ่านเพื่อเข้าสู่ระบบ' : 'Enter your email and password to sign in'}
             </p>
 
-            {/* Tab Selector */}
-            <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                gap: '8px',
-                marginBottom: '24px'
-            }}>
-                {tabs.map(tab => (
-                    <button
-                        key={tab.id}
-                        type="button"
-                        onClick={() => setActiveTab(tab.id)}
-                        style={{
-                            padding: '12px 8px',
-                            border: activeTab === tab.id ? '2px solid #1a237e' : '1px solid #e0e0e0',
-                            borderRadius: '8px',
-                            background: activeTab === tab.id ? '#f5f5ff' : '#fff',
-                            color: activeTab === tab.id ? '#1a237e' : '#666',
-                            fontSize: '13px',
-                            fontWeight: activeTab === tab.id ? '600' : '400',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s ease'
-                        }}
-                    >
-                        {locale === 'th' ? tab.labelTh : tab.label}
-                    </button>
-                ))}
-            </div>
+            {/* Error Message */}
+            {error && (
+                <div style={{
+                    padding: '12px 16px',
+                    background: '#ffebee',
+                    border: '1px solid #ef5350',
+                    borderRadius: '8px',
+                    color: '#c62828',
+                    fontSize: '14px',
+                    marginBottom: '20px',
+                    textAlign: 'center'
+                }}>
+                    {error}
+                </div>
+            )}
+
             {/* Form */}
             <form onSubmit={handleSubmit}>
-                {/* Email/Password for non-Thai Pharmacist */}
-                {activeTab !== 'thaiPharmacist' && (
-                    <>
-                        <div style={{ marginBottom: '16px' }}>
-                            <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '6px' }}>
-                                {t('email')} <span style={{ color: '#e53935' }}>*</span>
-                            </label>
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="email@example.com"
-                                required
-                                style={{
-                                    width: '100%',
-                                    padding: '12px 14px',
-                                    fontSize: '15px',
-                                    border: '1px solid #e0e0e0',
-                                    borderRadius: '8px',
-                                    outline: 'none',
-                                    transition: 'border-color 0.2s'
-                                }}
-                            />
-                        </div>
-                        <div style={{ marginBottom: '16px' }}>
-                            <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '6px' }}>
-                                {t('password')} <span style={{ color: '#e53935' }}>*</span>
-                            </label>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="••••••••"
-                                required
-                                style={{
-                                    width: '100%',
-                                    padding: '12px 14px',
-                                    fontSize: '15px',
-                                    border: '1px solid #e0e0e0',
-                                    borderRadius: '8px',
-                                    outline: 'none',
-                                    transition: 'border-color 0.2s'
-                                }}
-                            />
-                        </div>
-                    </>
-                )}
-
-                {/* Thai Student: No additional fields needed - uses Email + Password */}
-
-                {/* Thai Pharmacist: License ID + Password */}
-                {activeTab === 'thaiPharmacist' && (
-                    <>
-                        <div style={{ marginBottom: '16px' }}>
-                            <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '6px' }}>
-                                {t('licenseId')} <span style={{ color: '#e53935' }}>*</span>
-                            </label>
-                            <input
-                                type="text"
-                                value={licenseId}
-                                onChange={(e) => setLicenseId(e.target.value)}
-                                placeholder={t('licenseExample')}
-                                required
-                                style={{
-                                    width: '100%',
-                                    padding: '12px 14px',
-                                    fontSize: '15px',
-                                    border: '1px solid #e0e0e0',
-                                    borderRadius: '8px',
-                                    outline: 'none'
-                                }}
-                            />
-                        </div>
-                        <div style={{ marginBottom: '16px' }}>
-                            <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '6px' }}>
-                                {t('password')} <span style={{ color: '#e53935' }}>*</span>
-                            </label>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="••••••••"
-                                required
-                                style={{
-                                    width: '100%',
-                                    padding: '12px 14px',
-                                    fontSize: '15px',
-                                    border: '1px solid #e0e0e0',
-                                    borderRadius: '8px',
-                                    outline: 'none'
-                                }}
-                            />
-                        </div>
-                        <div style={{
-                            marginBottom: '16px',
-                            padding: '12px',
-                            background: '#f5f5f5',
+                {/* Email */}
+                <div style={{ marginBottom: '20px' }}>
+                    <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '8px' }}>
+                        {t('email')} <span style={{ color: '#e53935' }}>*</span>
+                    </label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="email@example.com"
+                        required
+                        style={{
+                            width: '100%',
+                            padding: '14px 16px',
+                            fontSize: '15px',
+                            border: '1px solid #e0e0e0',
                             borderRadius: '8px',
-                            fontSize: '13px',
-                            color: '#666'
-                        }}>
-                            ℹ️ {t('cpeInfo')}
-                        </div>
-                    </>
-                )}
+                            outline: 'none',
+                            transition: 'border-color 0.2s',
+                            boxSizing: 'border-box'
+                        }}
+                        onFocus={(e) => e.target.style.borderColor = '#1a237e'}
+                        onBlur={(e) => e.target.style.borderColor = '#e0e0e0'}
+                    />
+                </div>
 
-                {/* Remember Me */}
-                {activeTab !== 'thaiPharmacist' && (
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px', color: '#666' }}>
-                            <input type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)}
-                                style={{ width: '16px', height: '16px' }} />
-                            {t('rememberMe')}
-                        </label>
-                        <Link href={`/${locale}/forgot-password`} style={{ fontSize: '14px', color: '#1a237e', textDecoration: 'none' }}>
-                            {t('forgotPassword')}
-                        </Link>
-                    </div>
-                )}
+                {/* Password */}
+                <div style={{ marginBottom: '20px' }}>
+                    <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '8px' }}>
+                        {t('password')} <span style={{ color: '#e53935' }}>*</span>
+                    </label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="••••••••"
+                        required
+                        style={{
+                            width: '100%',
+                            padding: '14px 16px',
+                            fontSize: '15px',
+                            border: '1px solid #e0e0e0',
+                            borderRadius: '8px',
+                            outline: 'none',
+                            transition: 'border-color 0.2s',
+                            boxSizing: 'border-box'
+                        }}
+                        onFocus={(e) => e.target.style.borderColor = '#1a237e'}
+                        onBlur={(e) => e.target.style.borderColor = '#e0e0e0'}
+                    />
+                </div>
+
+                {/* Remember Me & Forgot Password */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px', color: '#666' }}>
+                        <input
+                            type="checkbox"
+                            checked={rememberMe}
+                            onChange={(e) => setRememberMe(e.target.checked)}
+                            style={{ width: '16px', height: '16px', accentColor: '#1a237e' }}
+                        />
+                        {t('rememberMe')}
+                    </label>
+                    <Link href={`/${locale}/forgot-password`} style={{ fontSize: '14px', color: '#1a237e', textDecoration: 'none', fontWeight: '500' }}>
+                        {t('forgotPassword')}
+                    </Link>
+                </div>
 
                 {/* Submit Button */}
                 <button
@@ -269,15 +183,14 @@ export default function LoginForm() {
                     style={{
                         width: '100%',
                         padding: '14px',
-                        background: '#1a237e',
+                        background: isLoading ? '#9fa8da' : '#1a237e',
                         border: 'none',
                         borderRadius: '8px',
                         color: '#fff',
                         fontSize: '16px',
                         fontWeight: '600',
                         cursor: isLoading ? 'not-allowed' : 'pointer',
-                        opacity: isLoading ? 0.7 : 1,
-                        transition: 'opacity 0.2s'
+                        transition: 'background 0.2s'
                     }}
                 >
                     {isLoading

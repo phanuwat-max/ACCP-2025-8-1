@@ -15,8 +15,8 @@ export default function CallForAbstracts() {
     const tCommon = useTranslations('common')
     const { user, isAuthenticated } = useAuth()
 
-    // Check if user is a pharmacist (Thai or International)
-    const isPharmacist = isAuthenticated && (user?.delegateType === 'thai_pharmacist' || user?.delegateType === 'international_pharmacist');
+    // Allow any authenticated user to submit abstracts
+    const canSubmitAbstract = isAuthenticated;
 
     return (
         <>
@@ -72,7 +72,7 @@ export default function CallForAbstracts() {
                                             {t('lateBreakingDesc')}
                                         </p>
 
-                                        {isPharmacist && (
+                                        {canSubmitAbstract && (
                                             <Link
                                                 href="/abstract-submission"
                                                 className="btn"
