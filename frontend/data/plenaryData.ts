@@ -39,9 +39,54 @@ export const plenarySpeakers = [
         name: "Prof. Dr. Kim Min-Jun",
         role: "Professor of Clinical Pharmacy",
         affiliation: "Seoul National University, South Korea",
-        topic: "Global Perspectives on Clinical Pharmacy Education",
+        topic: "Precision Medicine and Pharmacy Practice",
         session: "Plenary Session 3",
         day: "Day 3",
+        time: "08:30 - 10:00"
+    },
+    {
+        name: "Dr. Emily Watson",
+        role: "Head of Pharmacy Research",
+        affiliation: "Oxford University, United Kingdom",
+        topic: "Antimicrobial Stewardship in the Digital Age",
+        session: "Plenary Session 1",
+        day: "Day 1",
+        time: "11:00 - 12:30"
+    },
+    {
+        name: "Prof. Dr. Hiroshi Tanaka",
+        role: "President, Japanese Society of Clinical Pharmacy",
+        affiliation: "Kyoto University, Japan",
+        topic: "Pharmacist-Led Interventions in Chronic Disease",
+        session: "Plenary Session 2",
+        day: "Day 2",
+        time: "08:30 - 10:00"
+    },
+    {
+        name: "Dr. Priya Sharma",
+        role: "Director of Clinical Services",
+        affiliation: "All India Institute of Medical Sciences",
+        topic: "Patient Safety and Medication Error Prevention",
+        session: "Keynote Lecture",
+        day: "Day 2",
+        time: "13:00 - 14:30"
+    },
+    {
+        name: "Prof. Dr. Michael Brown",
+        role: "Chair, Department of Pharmaceutical Sciences",
+        affiliation: "University of Sydney, Australia",
+        topic: "Innovations in Drug Delivery Systems",
+        session: "Plenary Session 3",
+        day: "Day 3",
+        time: "08:30 - 10:00"
+    },
+    {
+        name: "Dr. Lisa Anderson",
+        role: "Clinical Pharmacy Specialist",
+        affiliation: "Johns Hopkins Hospital, USA",
+        topic: "Critical Care Pharmacotherapy Updates",
+        session: "Plenary Session 2",
+        day: "Day 2",
         time: "08:30 - 10:00"
     }
 ];

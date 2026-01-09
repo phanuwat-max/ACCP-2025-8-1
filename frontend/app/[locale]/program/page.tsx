@@ -3,7 +3,6 @@ import Layout from "@/components/layout/Layout"
 import Link from "next/link"
 import { useTranslations, useLocale } from 'next-intl';
 import ProgramSchedule from '@/components/sections/program/ProgramSchedule';
-import ScientificTracks from '@/components/sections/program/ScientificTracks';
 import ProgramNavigation from '@/components/sections/program/ProgramNavigation';
 
 export default function ProgramOverview() {
@@ -32,8 +31,6 @@ export default function ProgramOverview() {
                     </div>
 
                     <ProgramSchedule />
-
-                    <ScientificTracks />
 
                     <ProgramNavigation />
 
