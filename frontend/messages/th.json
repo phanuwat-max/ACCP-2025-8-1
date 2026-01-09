@@ -393,7 +393,9 @@
         "and": "และ",
         "register": "สมัครสมาชิก",
         "haveAccount": "มีบัญชีอยู่แล้ว?",
-        "signIn": "เข้าสู่ระบบ"
+        "signIn": "เข้าสู่ระบบ",
+        "pendingApproval": "ลงทะเบียนสำเร็จ กรุณารอตรวจสอบ 5-7 วัน",
+        "backToHome": "กลับหน้าหลัก"
     },
     "registrationPolicies": {
         "pageTitle": "นโยบายการลงทะเบียน",

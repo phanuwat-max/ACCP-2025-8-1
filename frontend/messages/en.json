@@ -393,7 +393,9 @@
     "and": "and",
     "register": "Register",
     "haveAccount": "Already have an account?",
-    "signIn": "Sign In"
+    "signIn": "Sign In",
+    "pendingApproval": "Registration successful. Please wait 5-7 days for verification.",
+    "backToHome": "Back to Home"
   },
   "registrationPolicies": {
     "pageTitle": "Registration Policies",
