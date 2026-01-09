@@ -79,9 +79,9 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
                                     <div className="site-logo">
                                         <Link href={`/${locale}`}>
                                             <img
-                                                src="/assets/img/logo/accp_logo_main.png"
+                                                src="/assets/img/logo/ACCP-BANGKOK-2026-04.png"
                                                 alt="ACCP 2026"
-                                                style={{ height: '140px', width: 'auto', marginLeft: '20px', background: 'white', padding: '8px', borderRadius: '8px' }}
+                                                style={{ height: '55px', width: 'auto', marginLeft: '20px' }}
                                             />
                                         </Link>
                                     </div>
@@ -90,8 +90,8 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
                                         <ul>
                                             <li><Link href={`/${locale}`} style={{ color: isActive(`/${locale}`) ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}`) ? '600' : 'normal' }}>{t('home')}</Link></li>
                                             <li className={openDropdown === 'about' ? 'dropdown-open' : ''}>
-                                                <a 
-                                                    href="#" 
+                                                <a
+                                                    href="#"
                                                     onClick={(e) => toggleDropdown('about', e)}
                                                     style={{ color: isActive(`/${locale}/about`) || isActive(`/${locale}/welcome-messages`) || openDropdown === 'about' ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/about`) || isActive(`/${locale}/welcome-messages`) ? '600' : 'normal', cursor: 'pointer' }}
                                                 >
@@ -103,8 +103,8 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
                                                 </ul>
                                             </li>
                                             <li className={openDropdown === 'program' ? 'dropdown-open' : ''}>
-                                                <a 
-                                                    href="#" 
+                                                <a
+                                                    href="#"
                                                     onClick={(e) => toggleDropdown('program', e)}
                                                     style={{ color: isActive(`/${locale}/program`) || isActive(`/${locale}/gala-dinner`) || isActive(`/${locale}/preconference-workshops`) || openDropdown === 'program' ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/program`) || isActive(`/${locale}/gala-dinner`) || isActive(`/${locale}/preconference-workshops`) ? '600' : 'normal', cursor: 'pointer' }}
                                                 >
@@ -120,8 +120,8 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
                                                 </ul>
                                             </li>
                                             <li className={openDropdown === 'abstracts' ? 'dropdown-open' : ''}>
-                                                <a 
-                                                    href="#" 
+                                                <a
+                                                    href="#"
                                                     onClick={(e) => toggleDropdown('abstracts', e)}
                                                     style={{ color: isActive(`/${locale}/call-for-abstracts`) || isActive(`/${locale}/abstract-submission-guideline`) || openDropdown === 'abstracts' ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/call-for-abstracts`) || isActive(`/${locale}/abstract-submission-guideline`) ? '600' : 'normal', cursor: 'pointer' }}
                                                 >
@@ -133,8 +133,8 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
                                                 </ul>
                                             </li>
                                             <li className={openDropdown === 'registration' ? 'dropdown-open' : ''}>
-                                                <a 
-                                                    href="#" 
+                                                <a
+                                                    href="#"
                                                     onClick={(e) => toggleDropdown('registration', e)}
                                                     style={{ color: isActive(`/${locale}/registration`) || openDropdown === 'registration' ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/registration`) ? '600' : 'normal', cursor: 'pointer' }}
                                                 >
@@ -146,8 +146,8 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
                                                 </ul>
                                             </li>
                                             <li className={openDropdown === 'travel' ? 'dropdown-open' : ''}>
-                                                <a 
-                                                    href="#" 
+                                                <a
+                                                    href="#"
                                                     onClick={(e) => toggleDropdown('travel', e)}
                                                     style={{ color: isActive(`/${locale}/accommodation`) || isActive(`/${locale}/travel-visa`) || openDropdown === 'travel' ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/accommodation`) || isActive(`/${locale}/travel-visa`) ? '600' : 'normal', cursor: 'pointer' }}
                                                 >
@@ -159,8 +159,8 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
                                                 </ul>
                                             </li>
                                             <li className={openDropdown === 'more' ? 'dropdown-open' : ''}>
-                                                <a 
-                                                    href="#" 
+                                                <a
+                                                    href="#"
                                                     onClick={(e) => toggleDropdown('more', e)}
                                                     style={{ color: isActive(`/${locale}/sponsorship`) || isActive(`/${locale}/gallery`) || isActive(`/${locale}/contact`) || openDropdown === 'more' ? '#FFBA00' : '#fff', fontWeight: isActive(`/${locale}/sponsorship`) || isActive(`/${locale}/gallery`) || isActive(`/${locale}/contact`) ? '600' : 'normal', cursor: 'pointer' }}
                                                 >
@@ -260,7 +260,7 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
                             <div className="mobile-header-elements">
                                 <div className="mobile-logo">
                                     <Link href={`/${locale}`}>
-                                        <img src="/assets/img/logo/accp_logo_main.png" alt="ACCP 2026" style={{ height: '90px', width: 'auto', background: 'white', padding: '8px', borderRadius: '8px' }} />
+                                        <img src="/assets/img/logo/ACCP-BANGKOK-2026-04.png" alt="ACCP 2026" style={{ height: '60px', width: 'auto' }} />
                                     </Link>
                                 </div>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
