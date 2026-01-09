@@ -809,12 +809,10 @@
     "categories": {
       "clinicalPharmacy": "Clinical Pharmacy",
       "socialAdministrative": "Social and Administrative Pharmacy",
+      "pharmaceuticalSciences": "Pharmaceutical Sciences",
       "pharmacology": "Pharmacology and Toxicology",
-      "pharmacoeconomics": "Pharmacoeconomics and Pharmacoepidemiology",
       "education": "Pharmacy Education",
-      "pharmaceutics": "Pharmaceutics and Pharmaceutical Sciences",
-      "medicinalChemistry": "Medicinal Chemistry",
-      "pharmacognosy": "Pharmacognosy and Pharmaceutical Biotechnology"
+      "digitalPharmacy": "Digital Pharmacy and Innovation"
     },
     "presentationTypes": {
       "oral": "Oral Presentation",

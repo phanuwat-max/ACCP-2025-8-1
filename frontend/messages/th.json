@@ -809,12 +809,10 @@
         "categories": {
             "clinicalPharmacy": "เภสัชกรรมคลินิก",
             "socialAdministrative": "เภสัชกรรมสังคมและการบริหาร",
+            "pharmaceuticalSciences": "เภสัชศาสตร์",
             "pharmacology": "เภสัชวิทยาและพิษวิทยา",
-            "pharmacoeconomics": "เภสัชเศรษฐศาสตร์และระบาดวิทยาทางเภสัชกรรม",
             "education": "การศึกษาเภสัชศาสตร์",
-            "pharmaceutics": "เภสัชศาสตร์และวิทยาศาสตร์เภสัชกรรม",
-            "medicinalChemistry": "เคมีทางยา",
-            "pharmacognosy": "เภสัชพฤกษศาสตร์และเทคโนโลยีชีวภาพทางเภสัชกรรม"
+            "digitalPharmacy": "เภสัชกรรมดิจิทัลและนวัตกรรม"
         },
         "presentationTypes": {
             "oral": "การนำเสนอปากเปล่า",
