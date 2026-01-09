@@ -95,8 +95,8 @@ export default function SignupForm() {
                 isThai: activeTab === 'thaiStudent' || activeTab === 'thaiProfessional',
                 delegateType: activeTab === 'thaiStudent' ? 'thai_student' as const
                     : activeTab === 'internationalStudent' ? 'international_student' as const
-                        : activeTab === 'thaiProfessional' ? 'thai_professional' as const
-                            : 'international_professional' as const
+                        : activeTab === 'thaiProfessional' ? 'thai_pharmacist' as const
+                            : 'international_pharmacist' as const
             };
 
             const isStudent = activeTab === 'thaiStudent' || activeTab === 'internationalStudent';
