@@ -409,6 +409,20 @@
     "description": "The 25th Asian Conference on Clinical Pharmacy - Borderless Pharmacy Practice",
     "venue": "Centara Grand, CentralWorld"
   },
+  "map": {
+    "subtitle": "Conference Venue",
+    "title": "Venue Floor Plan",
+    "venueName": "Centara Grand & Bangkok Convention Centre",
+    "venueAddress": "999/9 Rama 1 Road, Pathumwan, Bangkok 10330, Thailand",
+    "dateLabel": "Conference Date",
+    "eventDate": "July 9-11, 2026",
+    "timeLabel": "Registration Opens",
+    "eventTime": "8:00 AM - 6:00 PM",
+    "floorLevelLabel": "Conference Floor",
+    "floorLevel": "22nd - 23rd Floor",
+    "floorLabel": "Convention Centre Floor Plan",
+    "floorPlanNote": "Floor plan coming soon"
+  },
   "cta": {
     "readyToJoin": "Ready to Join ACCP 2026?",
     "registerDescription": "Register now and be part of the premier clinical pharmacy conference in Asia",
