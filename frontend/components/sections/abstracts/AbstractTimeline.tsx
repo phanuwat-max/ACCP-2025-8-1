@@ -7,7 +7,7 @@ export default function AbstractTimeline() {
     const timelineItems = [
         {
             label: t('openingDate'),
-            date: '1 March 2026',
+            date: '15 January 2026',
             icon: 'fa-calendar-check',
             bgColor: '#e8f5e9',
             borderColor: '#4caf50',
@@ -17,7 +17,7 @@ export default function AbstractTimeline() {
         },
         {
             label: t('deadline'),
-            date: '31 May 2026',
+            date: '15 March 2026',
             icon: 'fa-calendar-xmark',
             bgColor: '#ffebee',
             borderColor: '#f44336',
@@ -27,23 +27,13 @@ export default function AbstractTimeline() {
         },
         {
             label: t('notification'),
-            date: '15 June 2026',
+            date: '10 April 2026',
             icon: 'fa-envelope',
             bgColor: '#e3f2fd',
             borderColor: '#2196f3',
             iconColor: '#2196f3',
             labelColor: '#1565c0',
             dateColor: '#0d47a1'
-        },
-        {
-            label: t('earlyBirdDeadline'),
-            date: '30 June 2026',
-            icon: 'fa-bird',
-            bgColor: '#fff3e0',
-            borderColor: '#ff9800',
-            iconColor: '#ff9800',
-            labelColor: '#e65100',
-            dateColor: '#e65100'
         }
     ]
 
@@ -58,7 +48,7 @@ export default function AbstractTimeline() {
 
                         <div className="row" data-aos="fade-up" data-aos-duration={1000}>
                             {timelineItems.map((item, index) => (
-                                <div key={index} className="col-md-6 mb-4">
+                                <div key={index} className="col-md-4 mb-4">
                                     <div style={{
                                         backgroundColor: item.bgColor,
                                         padding: '25px',

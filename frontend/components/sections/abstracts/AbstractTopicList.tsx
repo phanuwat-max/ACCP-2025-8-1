@@ -9,12 +9,10 @@ export default function AbstractTopicList() {
     const topicsKey = [
         "clinicalPharmacy",
         "socialAdministrative",
+        "pharmaceuticalSciences",
         "pharmacology",
-        "pharmacoeconomics",
         "education",
-        "pharmaceutics",
-        "medicinalChemistry",
-        "pharmacognosy"
+        "digitalPharmacy"
     ];
 
     return (
