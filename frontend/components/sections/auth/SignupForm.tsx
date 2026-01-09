@@ -5,7 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 
-type TabType = 'thaiStudent' | 'internationalStudent' | 'Professional & Academician';
+type TabType = 'thaiStudent' | 'internationalStudent' | 'thaiProfessional' | 'internationalProfessional';
 
 const internationalCountries = [
     "Afghanistan", "Albania", "Algeria", "Argentina", "Australia", "Austria", "Bangladesh",
@@ -38,6 +38,8 @@ export default function SignupForm() {
     const [passportId, setPassportId] = useState('');
     const [country, setCountry] = useState('');
     const [agreeTerms, setAgreeTerms] = useState(false);
+    const [studentDocument, setStudentDocument] = useState<File | null>(null);
+    const [isPending, setIsPending] = useState(false);
 
     const validateThaiId = (id: string): boolean => {
         if (id.length !== 13 || !/^\d{13}$/.test(id)) return false;
@@ -66,7 +68,7 @@ export default function SignupForm() {
                 setIsLoading(false);
                 return;
             }
-            if (activeTab === 'thaiStudent') {
+            if (activeTab === 'thaiStudent' || activeTab === 'thaiProfessional') {
                 if (!idCard) {
                     alert(locale === 'th' ? 'กรุณากรอกเลขบัตรประชาชน' : 'Please enter Thai ID card');
                     setIsLoading(false);
@@ -88,17 +90,25 @@ export default function SignupForm() {
 
             const userData = {
                 firstName, lastName, email,
-                country: activeTab === 'thaiStudent' ? 'Thailand' : country,
-                idCard: activeTab === 'thaiStudent' ? idCard : undefined,
-                isThai: activeTab === 'thaiStudent',
+                country: activeTab === 'thaiStudent' || activeTab === 'thaiProfessional' ? 'Thailand' : country,
+                idCard: (activeTab === 'thaiStudent' || activeTab === 'thaiProfessional') ? idCard : undefined,
+                isThai: activeTab === 'thaiStudent' || activeTab === 'thaiProfessional',
                 delegateType: activeTab === 'thaiStudent' ? 'thai_student' as const
                     : activeTab === 'internationalStudent' ? 'international_student' as const
-                        : 'international_pharmacist' as const
+                        : activeTab === 'thaiProfessional' ? 'thai_professional' as const
+                            : 'international_professional' as const
             };
 
-            login(userData);
-            await new Promise(resolve => setTimeout(resolve, 100));
-            router.push(`/${locale}`);
+            const isStudent = activeTab === 'thaiStudent' || activeTab === 'internationalStudent';
+            
+            if (isStudent) {
+                // Don't login students yet, they need approval
+                setIsPending(true);
+            } else {
+                login(userData);
+                await new Promise(resolve => setTimeout(resolve, 100));
+                router.push(`/${locale}`);
+            }
         } catch (error) {
             console.error('Signup error:', error);
         } finally {
@@ -108,8 +118,9 @@ export default function SignupForm() {
 
     const tabs: { id: TabType; label: string; labelTh: string }[] = [
         { id: 'thaiStudent', label: 'Thai Student', labelTh: 'นักศึกษาไทย' },
-        { id: 'internationalStudent', label: 'International Student', labelTh: 'นศ.ต่างชาติ' },
-        { id: 'Professional & Academician', label: 'Professional & Academician', labelTh: 'ภก.ต่างชาติ' }
+        { id: 'internationalStudent', label: 'International Student', labelTh: 'นักศึกษาต่างชาติ' },
+        { id: 'thaiProfessional', label: 'Thai Medical Professional', labelTh: 'บุคลากรทางการแพทย์ไทย' },
+        { id: 'internationalProfessional', label: 'International Medical Professional', labelTh: 'บุคลากรทางการแพทย์ต่างชาติ' }
     ];
 
     const isThai = activeTab === 'thaiStudent';
@@ -130,8 +141,66 @@ export default function SignupForm() {
             padding: '40px',
             boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
             maxWidth: '480px',
-            margin: '0 auto'
+            margin: '0 auto',
+            position: 'relative'
         }}>
+            {/* Modal Overlay */}
+            {isPending && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'rgba(0,0,0,0.5)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 1000,
+                    padding: '20px'
+                }}>
+                    <div style={{
+                        background: '#fff',
+                        borderRadius: '16px',
+                        padding: '40px',
+                        width: '100%',
+                        maxWidth: '400px',
+                        textAlign: 'center',
+                        boxShadow: '0 4px 24px rgba(0,0,0,0.2)'
+                    }}>
+                        <div style={{ marginBottom: '24px' }}>
+                            <img src="/assets/img/logo/accp_logo_main.png" alt="ACCP 2026"
+                                style={{ height: '80px', width: 'auto', margin: '0 auto' }} />
+                        </div>
+                        <div style={{ fontSize: '48px', marginBottom: '24px' }}>⏳</div>
+                        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#1a1a1a', marginBottom: '16px' }}>
+                            {locale === 'th' ? 'สร้างบัญชีสำเร็จ' : 'Account Created'}
+                        </h3>
+                        <p style={{ color: '#666', fontSize: '16px', marginBottom: '32px', lineHeight: '1.6' }}>
+                            {t('pendingApproval')}
+                        </p>
+                        <button 
+                            onClick={() => router.push(`/${locale}/login`)}
+                            style={{
+                                display: 'inline-block',
+                                padding: '12px 24px',
+                                background: '#1a237e',
+                                color: '#fff',
+                                borderRadius: '8px',
+                                border: 'none',
+                                fontWeight: '600',
+                                fontSize: '15px',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s ease',
+                                width: '100%'
+                            }}
+                        >
+                            {locale === 'th' ? 'ตกลง' : 'OK'}
+                        </button>
+                    </div>
+                </div>
+            )}
+
             {/* Logo */}
             <div style={{ textAlign: 'center', marginBottom: '24px' }}>
                 <Link href={`/${locale}`}>
@@ -149,14 +218,13 @@ export default function SignupForm() {
             </p>
 
             {/* Tab Selector */}
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '24px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '24px' }}>
                 {tabs.map(tab => (
                     <button
                         key={tab.id}
                         type="button"
                         onClick={() => setActiveTab(tab.id)}
                         style={{
-                            flex: 1,
                             padding: '12px 8px',
                             border: activeTab === tab.id ? '2px solid #1a237e' : '1px solid #e0e0e0',
                             borderRadius: '8px',
@@ -171,20 +239,6 @@ export default function SignupForm() {
                         {locale === 'th' ? tab.labelTh : tab.label}
                     </button>
                 ))}
-            </div>
-
-            {/* Note for Thai Pharmacist */}
-            <div style={{
-                marginBottom: '20px',
-                padding: '12px',
-                background: '#f5f5f5',
-                borderRadius: '8px',
-                fontSize: '13px',
-                color: '#666'
-            }}>
-                ℹ️ {locale === 'th'
-                    ? 'เภสัชกรไทย: ไม่ต้องสมัครสมาชิก สามารถเข้าสู่ระบบด้วยเลขใบประกอบวิชาชีพได้เลย'
-                    : 'Thai Pharmacists: No registration required. Login directly with your license ID.'}
             </div>
 
             {/* Form */}
@@ -207,8 +261,8 @@ export default function SignupForm() {
                     </div>
                 </div>
 
-                {/* Thai Student: ID Card */}
-                {activeTab === 'thaiStudent' && (
+                {/* Thai Student/Professional: ID Card */}
+                {(activeTab === 'thaiStudent' || activeTab === 'thaiProfessional') && (
                     <div style={{ marginBottom: '16px' }}>
                         <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '6px' }}>
                             {locale === 'th' ? 'เลขบัตรประชาชน' : 'Thai ID Card'} <span style={{ color: '#e53935' }}>*</span>
@@ -224,7 +278,7 @@ export default function SignupForm() {
                 )}
 
                 {/* International: Passport ID + Country */}
-                {activeTab !== 'thaiStudent' && (
+                {(activeTab === 'internationalStudent' || activeTab === 'internationalProfessional') && (
                     <>
                         <div style={{ marginBottom: '16px' }}>
                             <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '6px' }}>
@@ -283,6 +337,52 @@ export default function SignupForm() {
                             placeholder="••••••••" required style={inputStyle} />
                     </div>
                 </div>
+
+                {/* Student Document Upload */}
+                {(activeTab === 'thaiStudent' || activeTab === 'internationalStudent') && (
+                    <div style={{ marginBottom: '16px' }}>
+                        <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#333', marginBottom: '6px' }}>
+                            {locale === 'th' ? 'เอกสารยืนยันความเป็นนักศึกษา (PDF)' : 'Student Verification Document (PDF)'} <span style={{ color: '#e53935' }}>*</span>
+                        </label>
+                        <input 
+                            id="student-doc-input"
+                            type="file" 
+                            accept=".pdf" 
+                            onChange={(e) => setStudentDocument(e.target.files?.[0] || null)}
+                            required 
+                            style={{ display: 'none' }} 
+                        />
+                        <button
+                            type="button"
+                            onClick={() => document.getElementById('student-doc-input')?.click()}
+                            style={{
+                                width: '100%',
+                                padding: '12px 14px',
+                                fontSize: '15px',
+                                border: '2px solid #1a237e',
+                                borderRadius: '8px',
+                                background: '#f5f5ff',
+                                color: '#1a237e',
+                                cursor: 'pointer',
+                                fontWeight: '500',
+                                transition: 'all 0.2s ease'
+                            }}
+                            onMouseEnter={(e) => {
+                                (e.currentTarget as HTMLButtonElement).style.background = '#1a237e';
+                                (e.currentTarget as HTMLButtonElement).style.color = '#fff';
+                            }}
+                            onMouseLeave={(e) => {
+                                (e.currentTarget as HTMLButtonElement).style.background = '#f5f5ff';
+                                (e.currentTarget as HTMLButtonElement).style.color = '#1a237e';
+                            }}
+                        >
+                            {studentDocument ? studentDocument.name : (locale === 'th' ? '📁 เลือกไฟล์' : '📁 Choose File')}
+                        </button>
+                        <p style={{ fontSize: '12px', color: '#888', marginTop: '4px' }}>
+                            {locale === 'th' ? 'อัพโหลดใบรับรองนักศึกษา หรือเอกสารที่เกี่ยวข้อง (ไฟล์ PDF เท่านั้น)' : 'Upload student certificate or related document (PDF only)'}
+                        </p>
+                    </div>
+                )}
 
                 {/* Terms */}
                 <div style={{ marginBottom: '20px' }}>
