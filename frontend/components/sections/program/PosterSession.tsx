@@ -13,7 +13,7 @@ export default function PosterSession() {
                         <div className="heading2 space-margin60">
                             <h5 data-aos="fade-up" data-aos-duration={800}>
                                 <i className="fa-solid fa-image" style={{ marginRight: '10px', color: '#F59E0B' }} />
-                                e-Poster Presentations
+                                Poster Presentations
                             </h5>
                         </div>
                     </div>
