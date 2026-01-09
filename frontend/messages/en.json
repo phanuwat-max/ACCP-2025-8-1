@@ -137,7 +137,9 @@
     "send": "Send Message",
     "officeHours": "Office Hours",
     "mondayFriday": "Monday - Friday",
-    "contactInfo": "Contact Information"
+    "contactInfo": "Contact Information",
+    "location": "Location",
+    "locationName": "The Pharmacy Council of Thailand"
   },
   "program": {
     "pageTitle": "Program Overview",
