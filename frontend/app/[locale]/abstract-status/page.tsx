@@ -2,6 +2,8 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
+import Layout from '@/components/layout/Layout';
+
 export default function AbstractStatus() {
     const t = useTranslations('abstracts');
     const tUser = useTranslations('userProfile');
@@ -56,14 +58,17 @@ export default function AbstractStatus() {
             padding: '80px 20px 40px',
             background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'
         }}>
-            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-                {/* Header */}
+                <div style={{
+                    maxWidth: '1000px',
+                    margin: '0 auto'
+                }}>
+                    {/* Page Header */}
                 <div style={{
                     background: '#fff',
                     borderRadius: '20px',
                     padding: '40px',
                     marginBottom: '30px',
-                    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)',
+                        boxShadow: '0 10px 40px rgba(0, 0, 0, 0.08)',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -73,299 +78,218 @@ export default function AbstractStatus() {
                     <div>
                         <h1 style={{
                             fontSize: '32px',
-                            fontWeight: '700',
+                                fontWeight: '800',
                             color: '#1a237e',
                             marginBottom: '10px',
                             display: 'flex',
                             alignItems: 'center',
                             gap: '15px'
                         }}>
-                            <i className="fa-solid fa-file-lines" style={{ color: '#FFBA00' }} />
-                            {t('pageTitle')}
+                                <i className="fa-solid fa-file-lines" style={{ color: '#FFC107' }} />
+                                {t('title')}
                         </h1>
-                        <p style={{ color: '#666', fontSize: '16px', margin: 0 }}>
-                            {t('pageDescription')}
+                            <p style={{
+                                fontSize: '16px',
+                                color: '#666'
+                            }}>
+                                {t('subtitle')}
                         </p>
                     </div>
-
-                    <Link
-                        href="/call-for-abstracts"
-                        style={{
+                        <Link href="/abstract-submission" style={{
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: '10px',
-                            background: 'linear-gradient(135deg, #00695c 0%, #00897b 100%)',
+                            background: '#009688',
                             color: '#fff',
                             padding: '12px 24px',
-                            borderRadius: '25px',
-                            textDecoration: 'none',
-                            fontSize: '14px',
+                            borderRadius: '50px',
                             fontWeight: '600',
-                            transition: 'all 0.3s ease',
-                            boxShadow: '0 6px 20px rgba(0, 105, 92, 0.3)'
-                        }}
-                    >
+                            textDecoration: 'none',
+                            boxShadow: '0 4px 15px rgba(0, 150, 136, 0.3)',
+                            transition: 'all 0.3s ease'
+                        }}>
                         <i className="fa-solid fa-plus" />
                         {t('submitNew')}
                     </Link>
                 </div>
 
-                {/* Summary Cards */}
+                    {/* Status Overview Cards */}
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
                     gap: '20px',
-                    marginBottom: '30px'
+                        marginBottom: '40px'
                 }}>
                     <div style={{
                         background: '#fff',
                         borderRadius: '16px',
                         padding: '25px',
-                        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.08)',
-                        borderLeft: '4px solid #1a237e'
+                            boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+                            borderLeft: '5px solid #1a237e'
                     }}>
                         <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>{t('totalSubmitted')}</div>
-                        <div style={{ fontSize: '32px', fontWeight: '700', color: '#1a237e' }}>2</div>
+                            <div style={{ fontSize: '36px', fontWeight: '800', color: '#1a237e' }}>2</div>
                     </div>
-
                     <div style={{
                         background: '#fff',
                         borderRadius: '16px',
                         padding: '25px',
-                        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.08)',
-                        borderLeft: '4px solid #00C853'
+                            boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+                            borderLeft: '5px solid #00C853'
                     }}>
                         <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>{t('accepted')}</div>
-                        <div style={{ fontSize: '32px', fontWeight: '700', color: '#00C853' }}>1</div>
+                            <div style={{ fontSize: '36px', fontWeight: '800', color: '#00C853' }}>1</div>
                     </div>
 
                     <div style={{
                         background: '#fff',
                         borderRadius: '16px',
                         padding: '25px',
-                        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.08)',
-                        borderLeft: '4px solid #FF9800'
+                            boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+                            borderLeft: '5px solid #FF9800'
                     }}>
                         <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>{t('underReview')}</div>
-                        <div style={{ fontSize: '32px', fontWeight: '700', color: '#FF9800' }}>1</div>
+                            <div style={{ fontSize: '36px', fontWeight: '800', color: '#FF9800' }}>1</div>
                     </div>
                 </div>
 
                 {/* Abstract List */}
-                {abstracts.map((abstract) => (
-                    <div key={abstract.id} style={{
-                        background: '#fff',
-                        borderRadius: '20px',
-                        padding: '40px',
-                        marginBottom: '25px',
-                        boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)',
-                        position: 'relative',
-                        overflow: 'hidden'
-                    }}>
-                        {/* Decorative gradient bar */}
-                        <div style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            height: '6px',
-                            background: `linear-gradient(90deg, ${abstract.statusColor} 0%, ${abstract.statusColor}dd 100%)`
-                        }} />
-
-                        {/* Status Badge */}
-                        <div style={{
-                            position: 'absolute',
-                            top: '20px',
-                            right: '40px',
-                            padding: '10px 20px',
-                            background: abstract.statusColor,
-                            color: '#fff',
-                            borderRadius: '20px',
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            boxShadow: `0 4px 15px ${abstract.statusColor}60`,
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px'
-                        }}>
-                            <i className={`fa-solid ${getStatusIcon(abstract.status)}`} />
-                            {t(abstract.status)}
-                        </div>
-
-                        {/* Abstract Details */}
-                        <div style={{ paddingRight: '180px', marginTop: '10px' }}>
                             <h2 style={{
-                                fontSize: '22px',
+                        fontSize: '24px',
                                 fontWeight: '700',
                                 color: '#333',
                                 marginBottom: '20px',
-                                lineHeight: '1.4'
+                        paddingLeft: '10px',
+                        borderLeft: '4px solid #1a237e'
                             }}>
-                                {abstract.title}
+                        {t('yourAbstracts')}
                             </h2>
 
-                            <div style={{
-                                display: 'flex',
-                                gap: '15px',
-                                flexWrap: 'wrap',
-                                marginBottom: '25px'
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+                        {abstracts.map((abstract) => (
+                            <div key={abstract.id} style={{
+                                background: '#fff',
+                                borderRadius: '20px',
+                                overflow: 'hidden',
+                                boxShadow: '0 10px 40px rgba(0, 0, 0, 0.05)',
+                                borderTop: `4px solid ${abstract.statusColor}`
                             }}>
+                                {/* Header */}
                                 <div style={{
-                                    padding: '6px 16px',
-                                    background: '#f5f5f5',
-                                    borderRadius: '8px',
-                                    fontSize: '13px',
-                                    fontWeight: '600',
-                                    color: '#1a237e'
+                                    padding: '25px 30px',
+                                    borderBottom: '1px solid #f0f0f0',
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'start',
+                                    flexWrap: 'wrap',
+                                    gap: '15px'
                                 }}>
-                                    {t(abstract.category)}
-                                </div>
+                                    <div style={{ flex: 1 }}>
                                 <div style={{
-                                    padding: '6px 16px',
-                                    background: '#e8f5e9',
-                                    borderRadius: '8px',
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            background: `${abstract.statusColor}15`,
+                                            color: abstract.statusColor,
+                                            padding: '6px 14px',
+                                            borderRadius: '50px',
                                     fontSize: '13px',
-                                    fontWeight: '600',
-                                    color: '#00695c'
-                                }}>
-                                    {t(abstract.presentationType)}
-                                </div>
-                            </div>
-
-                            <div style={{
-                                display: 'grid',
-                                gridTemplateColumns: 'auto 1fr',
-                                gap: '12px 20px',
-                                marginBottom: '25px'
+                                            fontWeight: '700',
+                                            marginBottom: '10px'
                             }}>
-                                <div style={{ color: '#999', fontSize: '14px' }}>{t('abstractId')}:</div>
-                                <div style={{ color: '#333', fontSize: '14px', fontWeight: '600', fontFamily: 'monospace' }}>{abstract.id}</div>
-                                
-                                <div style={{ color: '#999', fontSize: '14px' }}>{t('submittedDate')}:</div>
-                                <div style={{ color: '#333', fontSize: '14px', fontWeight: '600' }}>{abstract.submittedDate}</div>
+                                            <i className={`fa-solid ${getStatusIcon(abstract.status)}`} />
+                                            {t(`status.${abstract.status}`)}
                             </div>
-
-                            {/* Presentation Details (if accepted) */}
-                            {abstract.presentationDetails && (
-                                <div style={{
-                                    padding: '25px',
-                                    background: 'linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%)',
-                                    borderRadius: '12px',
-                                    borderLeft: '4px solid #00C853',
-                                    marginBottom: '20px'
-                                }}>
                                     <h3 style={{
-                                        fontSize: '14px',
+                                            fontSize: '18px',
                                         fontWeight: '700',
-                                        color: '#00695c',
-                                        marginBottom: '15px',
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '0.5px',
+                                            color: '#333',
+                                            lineHeight: '1.5',
+                                            marginBottom: '10px'
+                                        }}>
+                                            {abstract.title}
+                                        </h3>
+                                        <div style={{
+                                            fontSize: '13px',
+                                            color: '#666',
                                         display: 'flex',
                                         alignItems: 'center',
-                                        gap: '8px'
+                                            gap: '20px',
+                                            flexWrap: 'wrap'
                                     }}>
-                                        <i className="fa-solid fa-calendar-check" />
-                                        {t('presentationSchedule')}
-                                    </h3>
-                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
-                                        <div>
-                                            <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>{t('session')}</div>
-                                            <div style={{ fontSize: '14px', color: '#333', fontWeight: '600' }}>{abstract.presentationDetails.session}</div>
-                                        </div>
-                                        <div>
-                                            <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>{t('room')}</div>
-                                            <div style={{ fontSize: '14px', color: '#333', fontWeight: '600' }}>{abstract.presentationDetails.room}</div>
-                                        </div>
-                                        <div>
-                                            <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>{t('date')}</div>
-                                            <div style={{ fontSize: '14px', color: '#333', fontWeight: '600' }}>{abstract.presentationDetails.date}</div>
-                                        </div>
-                                        <div>
-                                            <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>{t('time')}</div>
-                                            <div style={{ fontSize: '14px', color: '#333', fontWeight: '600' }}>{abstract.presentationDetails.time}</div>
+                                            <span>
+                                                <i className="fa-solid fa-layer-group" style={{ marginRight: '6px', color: '#999' }} />
+                                                {t(`category.${abstract.category}`)}
+                                            </span>
+                                            <span>
+                                                <i className="fa-solid fa-microphone" style={{ marginRight: '6px', color: '#999' }} />
+                                                {t(`type.${abstract.presentationType}`)}
+                                            </span>
+                                            <span>
+                                                <i className="fa-solid fa-calendar-check" style={{ marginRight: '6px', color: '#999' }} />
+                                                Submitted: {abstract.submittedDate}
+                                            </span>
                                         </div>
                                     </div>
-                                </div>
-                            )}
-
-                            {/* Review Comments */}
-                            {abstract.reviewComments && (
-                                <div style={{
-                                    padding: '20px',
-                                    background: '#f8f9fa',
-                                    borderRadius: '12px',
-                                    borderLeft: '4px solid #1a237e',
-                                    marginBottom: '20px'
-                                }}>
-                                    <h3 style={{
-                                        fontSize: '14px',
-                                        fontWeight: '700',
-                                        color: '#1a237e',
-                                        marginBottom: '10px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '8px'
-                                    }}>
-                                        <i className="fa-solid fa-comment-dots" />
-                                        {t('reviewerComments')}
-                                    </h3>
-                                    <p style={{
-                                        fontSize: '14px',
-                                        color: '#333',
-                                        lineHeight: '1.6',
-                                        margin: 0
-                                    }}>
-                                        {abstract.reviewComments}
-                                    </p>
-                                </div>
-                            )}
-
-                            {/* Action Buttons */}
-                            <div style={{
-                                display: 'flex',
-                                gap: '12px',
-                                flexWrap: 'wrap'
-                            }}>
-                                <button style={{
-                                    padding: '10px 20px',
-                                    background: 'linear-gradient(135deg, #1a237e 0%, #3949ab 100%)',
-                                    border: 'none',
-                                    borderRadius: '10px',
-                                    color: '#fff',
-                                    fontSize: '14px',
-                                    fontWeight: '600',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px'
-                                }}>
-                                    <i className="fa-solid fa-eye" />
-                                    {t('viewFullAbstract')}
-                                </button>
-                                
-                                {abstract.status === 'accepted' && (
                                     <button style={{
-                                        padding: '10px 20px',
                                         background: 'transparent',
-                                        border: '2px solid #00C853',
-                                        borderRadius: '10px',
-                                        color: '#00C853',
+                                        border: '1px solid #ddd',
+                                        color: '#666',
+                                        padding: '8px 16px',
+                                        borderRadius: '8px',
                                         fontSize: '14px',
                                         fontWeight: '600',
                                         cursor: 'pointer',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '8px'
+                                        transition: 'all 0.2s',
+                                        whiteSpace: 'nowrap'
                                     }}>
-                                        <i className="fa-solid fa-download" />
-                                        {t('downloadCertificate')}
+                                        <i className="fa-solid fa-eye" style={{ marginRight: '8px' }} />
+                                        View Details
                                     </button>
+                                </div>
+
+                                {/* Body */}
+                                {abstract.status === 'accepted' && abstract.presentationDetails && (
+                                    <div style={{ padding: '25px 30px', background: '#f9fbfd' }}>
+                                        <h4 style={{
+                                            fontSize: '15px',
+                                            fontWeight: '700',
+                                            color: '#1a237e',
+                                            marginBottom: '15px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '10px'
+                                        }}>
+                                            <i className="fa-solid fa-chalkboard-user" />
+                                            Presentation Scheduled
+                                        </h4>
+                                        <div style={{
+                                            display: 'grid',
+                                            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                                            gap: '20px',
+                                            fontSize: '14px'
+                                        }}>
+                                            <div>
+                                                <div style={{ color: '#888', marginBottom: '4px', fontSize: '12px' }}>Session</div>
+                                                <div style={{ color: '#333', fontWeight: '500' }}>{abstract.presentationDetails.session}</div>
+                                            </div>
+                                            <div>
+                                                <div style={{ color: '#888', marginBottom: '4px', fontSize: '12px' }}>Date & Time</div>
+                                                <div style={{ color: '#333', fontWeight: '500' }}>
+                                                    {abstract.presentationDetails.date} <br />
+                                                    <span style={{ color: '#009688' }}>{abstract.presentationDetails.time}</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div style={{ color: '#888', marginBottom: '4px', fontSize: '12px' }}>Venue</div>
+                                                <div style={{ color: '#333', fontWeight: '500' }}>{abstract.presentationDetails.room}</div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 )}
                             </div>
-                        </div>
+                        ))}
                     </div>
-                ))}
             </div>
         </div>
     );

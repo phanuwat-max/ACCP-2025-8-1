@@ -5,6 +5,7 @@ interface OrderItem {
   id: string
   name: string
   price: number
+  details?: string
 }
 
 interface OrderSummaryProps {
@@ -137,6 +138,16 @@ export default function OrderSummary({
                 }}>
                   {addon.name}
                 </div>
+                {addon.details && (
+                  <div style={{
+                    fontSize: '12px',
+                    color: '#666',
+                    marginTop: '2px',
+                    fontStyle: 'italic'
+                  }}>
+                    {addon.details}
+                  </div>
+                )}
               </div>
               <div style={{
                 display: 'flex',

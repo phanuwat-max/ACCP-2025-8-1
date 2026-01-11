@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 export interface CheckoutStep {
   number: number
@@ -19,19 +19,30 @@ export interface CheckoutData {
   selectedPackage: string
   selectedAddOns: string[]
   
-  // Step 3: Special Requirements
-  institution: string
+
+  
   dietaryRequirement: string
-  specialNeeds: string
   
   // Step 4: Payment
   paymentMethod: 'qr' | 'card'
+  
+  // Dynamic fields
+  currency?: 'THB' | 'USD'
+  selectedWorkshopTopic?: string
 }
 
-const STORAGE_KEY = 'accp_checkout_data'
+const STORAGE_KEY = 'accp_checkout_data_v2'
 
+/**
+ * Custom hook to manage the Multi-step Checkout Wizard state.
+ * Handles form data, validation, navigation, and persistence via localStorage.
+ * 
+ * @param totalSteps - Total number of steps in the wizard (default: 4)
+ * @returns Object containing current state and handler functions
+ */
 export function useCheckoutWizard(totalSteps: number = 4) {
   const [currentStep, setCurrentStep] = useState(1)
+  const [isInitialized, setIsInitialized] = useState(false)
   const [checkoutData, setCheckoutData] = useState<CheckoutData>({
     firstName: '',
     lastName: '',
@@ -40,10 +51,10 @@ export function useCheckoutWizard(totalSteps: number = 4) {
     country: '',
     selectedPackage: 'professional',
     selectedAddOns: [],
-    institution: '',
     dietaryRequirement: 'none',
-    specialNeeds: '',
-    paymentMethod: 'card'
+    paymentMethod: 'card',
+    currency: 'USD',
+    selectedWorkshopTopic: ''
   })
 
   // Load saved data from localStorage
@@ -52,47 +63,50 @@ export function useCheckoutWizard(totalSteps: number = 4) {
     if (saved) {
       try {
         const data = JSON.parse(saved)
-        setCheckoutData(data.checkoutData || checkoutData)
+        setCheckoutData(prev => data.checkoutData || prev)
         setCurrentStep(data.currentStep || 1)
       } catch (e) {
         console.error('Failed to load checkout data:', e)
       }
     }
+    setIsInitialized(true)
   }, [])
 
   // Save data to localStorage whenever it changes
   useEffect(() => {
+    if (!isInitialized) return
+
     const dataToSave = {
       checkoutData,
       currentStep,
       timestamp: new Date().toISOString()
     }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave))
-  }, [checkoutData, currentStep])
+  }, [checkoutData, currentStep, isInitialized])
 
-  const updateCheckoutData = (updates: Partial<CheckoutData>) => {
+  const updateCheckoutData = useCallback((updates: Partial<CheckoutData>) => {
     setCheckoutData(prev => ({ ...prev, ...updates }))
-  }
+  }, [])
 
-  const nextStep = () => {
+  const nextStep = useCallback(() => {
     if (currentStep < totalSteps) {
       setCurrentStep(prev => prev + 1)
     }
-  }
+  }, [currentStep, totalSteps])
 
-  const previousStep = () => {
+  const previousStep = useCallback(() => {
     if (currentStep > 1) {
       setCurrentStep(prev => prev - 1)
     }
-  }
+  }, [currentStep])
 
-  const goToStep = (step: number) => {
+  const goToStep = useCallback((step: number) => {
     if (step >= 1 && step <= totalSteps) {
       setCurrentStep(step)
     }
-  }
+  }, [totalSteps])
 
-  const resetCheckout = () => {
+  const resetCheckout = useCallback(() => {
     setCurrentStep(1)
     setCheckoutData({
       firstName: '',
@@ -102,13 +116,13 @@ export function useCheckoutWizard(totalSteps: number = 4) {
       country: '',
       selectedPackage: 'professional',
       selectedAddOns: [],
-      institution: '',
       dietaryRequirement: 'none',
-      specialNeeds: '',
-      paymentMethod: 'card'
+      paymentMethod: 'card',
+      currency: 'USD',
+      selectedWorkshopTopic: ''
     })
     localStorage.removeItem(STORAGE_KEY)
-  }
+  }, [])
 
   const getSteps = (): CheckoutStep[] => {
     return Array.from({ length: totalSteps }, (_, i) => ({

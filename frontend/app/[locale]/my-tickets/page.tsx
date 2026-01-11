@@ -1,33 +1,72 @@
 'use client'
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
+
+import { useCheckoutWizard } from '@/hooks/checkout/useCheckoutWizard';
+import { formatCurrency } from '@/utils/currency';
 
 export default function MyTickets() {
     const t = useTranslations('tickets');
-    const tUser = useTranslations('userProfile');
+    const locale = useLocale();
+    // Using checkout data to populate tickets
+    const { checkoutData } = useCheckoutWizard();
 
-    // Mock ticket data
-    const tickets = [
+
+
+    // Determine currency based on payment country (Thailand = THB, Others = USD)
+    const isThaiPayment = checkoutData.country?.trim().toLowerCase() === 'thailand';
+    const currencyLocale = isThaiPayment ? 'th' : 'en';
+    
+    // Import workshop options from centralized data if needed, or keep local if display-specific
+    // For now, keeping local structure but ensuring prices match centralized logic if applicable
+    const workshopOptions = [
+        { value: "workshop1", label: "Workshop I : Scientific writing", date: 'July 8, 2026', time: '09:00 - 12:00' },
+        { value: "workshop2", label: "Workshop II : APOP", date: 'July 8, 2026', time: '13:00 - 16:00' },
+        { value: "workshop3", label: "Workshop III : TBA", date: 'July 8, 2026', time: '09:00 - 12:00' },
+        { value: "workshop4", label: "Workshop IV : TBA", date: 'July 8, 2026', time: '13:00 - 16:00' },
+    ];
+
+    // Main Ticket
+    const tickets = checkoutData.selectedPackage ? [
         {
             id: 'ACCP2026-REG-001234',
-            type: 'professionalRegistration',
+            type: checkoutData.selectedPackage === 'student' ? 'studentRegistration' : 'professionalRegistration',
             category: 'earlyBird',
             status: 'confirmed',
-            purchaseDate: '2026-02-15',
-            amount: '$450',
+            purchaseDate: new Date().toLocaleDateString(),
+            amount: checkoutData.selectedPackage === 'student' 
+                ? formatCurrency(checkoutData.selectedPackage === 'student' ? (isThaiPayment ? 4900 : 250) : (isThaiPayment ? 7900 : 385), currencyLocale)
+                : formatCurrency(checkoutData.selectedPackage === 'student' ? (isThaiPayment ? 4900 : 250) : (isThaiPayment ? 7900 : 385), currencyLocale),
             includes: [
                 'fullAccess',
                 'conferenceMaterials',
-                'coffeeLunch',
                 'certificate',
-                'galaDinner'
+                'networkingSessions'
             ],
             qrCode: true
         }
-    ];
+    ] : [];
 
-    // Gala Dinner Ticket
-    const galaDinnerTicket = {
+    // Workshop Ticket (if selected)
+    const addons = [];
+    if (checkoutData.selectedAddOns.includes('workshop') && checkoutData.selectedWorkshopTopic) {
+        const workshopDetails = workshopOptions.find(w => w.value === checkoutData.selectedWorkshopTopic);
+        if (workshopDetails) {
+            addons.push({
+                id: 'ACCP2026-WS-001234',
+                type: 'preWorkshop',
+                name: workshopDetails.label,
+                date: workshopDetails.date,
+                time: workshopDetails.time,
+                status: 'confirmed',
+                amount: formatCurrency(isThaiPayment ? 2100 : 70, currencyLocale)
+            });
+        }
+    }
+
+    // Gala Dinner Ticket (if selected)
+    const hasGala = checkoutData.selectedAddOns.includes('gala');
+    const galaDinnerTicket = hasGala ? {
         id: 'ACCP2026-GALA-001234',
         eventName: 'galaDinnerEvent',
         status: 'confirmed',
@@ -35,20 +74,9 @@ export default function MyTickets() {
         time: '19:00 - 22:00',
         venue: 'Centara Grand Ballroom',
         dressCode: 'formalAttire',
+        dietary: checkoutData.dietaryRequirement && checkoutData.dietaryRequirement !== 'none' ? checkoutData.dietaryRequirement : null,
         qrCode: true
-    };
-
-    const addons = [
-        {
-            id: 'ACCP2026-WS-001234',
-            type: 'preWorkshop',
-            name: 'Advanced Pharmacokinetics in Clinical Practice',
-            date: 'July 8, 2026',
-            time: '09:00 - 17:00',
-            status: 'confirmed',
-            amount: '$70'
-        }
-    ];
+    } : null;
 
     return (
         <div style={{
@@ -258,90 +286,13 @@ export default function MyTickets() {
                     </div>
                 ))}
 
-                {/* Gala Dinner Ticket */}
-                <div style={{
-                    background: '#fff',
-                    borderRadius: '20px',
-                    padding: '40px',
-                    marginBottom: '25px',
-                    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)'
-                }}>
-                    <h2 style={{
-                        fontSize: '22px',
-                        fontWeight: '700',
-                        color: '#333',
-                        marginBottom: '25px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '12px'
-                    }}>
-                        <i className="fa-solid fa-champagne-glasses" style={{ color: '#C2185B' }} />
-                        {t(galaDinnerTicket.eventName)}
-                    </h2>
-
-                    <div style={{
-                        padding: '25px',
-                        background: 'linear-gradient(135deg, #fce4ec 0%, #ffffff 100%)',
-                        borderRadius: '12px',
-                        border: '1px solid #f8bbd0',
-                        position: 'relative'
-                    }}>
-                        <div style={{
-                            position: 'absolute',
-                            top: '25px',
-                            right: '25px',
-                            padding: '6px 16px',
-                            background: 'linear-gradient(135deg, #00C853 0%, #69F0AE 100%)',
-                            color: '#fff',
-                            borderRadius: '16px',
-                            fontSize: '12px',
-                            fontWeight: '600'
-                        }}>
-                            {t(galaDinnerTicket.status)}
-                        </div>
-
-                        <h3 style={{
-                            fontSize: '18px',
-                            fontWeight: '700',
-                            color: '#333',
-                            marginBottom: '15px',
-                            paddingRight: '120px'
-                        }}>
-                            An Elegant Evening of Fine Dining & Networking
-                        </h3>
-
-                        <div style={{
-                            display: 'flex',
-                            gap: '30px',
-                            flexWrap: 'wrap',
-                            fontSize: '14px'
-                        }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <i className="fa-solid fa-calendar" style={{ color: '#C2185B' }} />
-                                <span style={{ color: '#666' }}>{galaDinnerTicket.date}</span>
-                            </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <i className="fa-solid fa-clock" style={{ color: '#C2185B' }} />
-                                <span style={{ color: '#666' }}>{galaDinnerTicket.time}</span>
-                            </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <i className="fa-solid fa-location-dot" style={{ color: '#C2185B' }} />
-                                <span style={{ color: '#666' }}>{galaDinnerTicket.venue}</span>
-                            </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <i className="fa-solid fa-user-tie" style={{ color: '#C2185B' }} />
-                                <span style={{ color: '#C2185B', fontWeight: '700' }}>{t(galaDinnerTicket.dressCode)}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Workshop Add-ons */}
+                {/* Workshop Add-ons - Moved above Gala as requested */}
                 {addons.length > 0 && (
                     <div style={{
                         background: '#fff',
                         borderRadius: '20px',
                         padding: '40px',
+                        marginBottom: '25px',
                         boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)'
                     }}>
                         <h2 style={{
@@ -411,6 +362,94 @@ export default function MyTickets() {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                )}
+
+                {/* Gala Dinner Ticket - Moved to bottom */}
+                {galaDinnerTicket && (
+                    <div style={{
+                        background: '#fff',
+                        borderRadius: '20px',
+                        padding: '40px',
+                        marginBottom: '25px',
+                        boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)'
+                    }}>
+                        <h2 style={{
+                            fontSize: '22px',
+                            fontWeight: '700',
+                            color: '#333',
+                            marginBottom: '25px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px'
+                        }}>
+                            <i className="fa-solid fa-champagne-glasses" style={{ color: '#C2185B' }} />
+                            {t(galaDinnerTicket.eventName)}
+                        </h2>
+
+                        <div style={{
+                            padding: '25px',
+                            background: 'linear-gradient(135deg, #fce4ec 0%, #ffffff 100%)',
+                            borderRadius: '12px',
+                            border: '1px solid #f8bbd0',
+                            position: 'relative'
+                        }}>
+                            <div style={{
+                                position: 'absolute',
+                                top: '25px',
+                                right: '25px',
+                                padding: '6px 16px',
+                                background: 'linear-gradient(135deg, #00C853 0%, #69F0AE 100%)',
+                                color: '#fff',
+                                borderRadius: '16px',
+                                fontSize: '12px',
+                                fontWeight: '600'
+                            }}>
+                                {t(galaDinnerTicket.status)}
+                            </div>
+
+                            <h3 style={{
+                                fontSize: '18px',
+                                fontWeight: '700',
+                                color: '#333',
+                                marginBottom: '15px',
+                                paddingRight: '120px'
+                            }}>
+                                An Elegant Evening of Fine Dining & Networking
+                            </h3>
+
+                            <div style={{
+                                display: 'flex',
+                                gap: '30px',
+                                flexWrap: 'wrap',
+                                fontSize: '14px'
+                            }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <i className="fa-solid fa-calendar" style={{ color: '#C2185B' }} />
+                                    <span style={{ color: '#666' }}>{galaDinnerTicket.date}</span>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <i className="fa-solid fa-clock" style={{ color: '#C2185B' }} />
+                                    <span style={{ color: '#666' }}>{galaDinnerTicket.time}</span>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <i className="fa-solid fa-location-dot" style={{ color: '#C2185B' }} />
+                                    <span style={{ color: '#666' }}>{galaDinnerTicket.venue}</span>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <i className="fa-solid fa-user-tie" style={{ color: '#C2185B' }} />
+                                    <span style={{ color: '#C2185B', fontWeight: '700' }}>{t(galaDinnerTicket.dressCode)}</span>
+                                </div>
+                                {galaDinnerTicket.dietary && (
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <i className="fa-solid fa-utensils" style={{ color: '#C2185B' }} />
+                                        <span style={{ color: '#C2185B', fontWeight: '700' }}>
+                                           Dietary: <span style={{ textTransform: 'capitalize' }}>{galaDinnerTicket.dietary}</span>
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>

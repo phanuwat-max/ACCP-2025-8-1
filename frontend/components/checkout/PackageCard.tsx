@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
+import { formatCurrency } from '@/utils/currency'
 
 interface PackageCardProps {
   id: string
@@ -115,7 +116,7 @@ export default function PackageCard({
               color: '#999',
               textDecoration: 'line-through'
             }}>
-              {currency}{originalPrice.toLocaleString()}
+              {formatCurrency(originalPrice, isThai ? 'th' : 'en')}
             </span>
             <span style={{
               background: '#ff6b6b',
@@ -135,15 +136,9 @@ export default function PackageCard({
           color: '#00C853',
           lineHeight: 1
         }}>
-          {currency}{price.toLocaleString()}
+          {formatCurrency(price, isThai ? 'th' : 'en')}
         </div>
-        <div style={{
-          fontSize: '14px',
-          color: '#666',
-          marginTop: '4px'
-        }}>
-          {isThai ? 'บาท' : 'USD'}
-        </div>
+
       </div>
 
       {/* Features */}
