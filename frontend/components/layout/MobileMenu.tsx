@@ -5,13 +5,20 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import UserProfileDropdown from './header/UserProfileDropdown';
+import { Link as IntlLink, usePathname as useIntlPathname } from '@/i18n/routing';
 
-export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
+interface MobileMenuProps {
+    isMobileMenu: boolean;
+    handleMobileMenu: () => void;
+}
+
+export default function MobileMenu({ isMobileMenu, handleMobileMenu }: MobileMenuProps) {
     const [isAccordion, setIsAccordion] = useState<number | null>(null)
     const t = useTranslations('common');
     const tContact = useTranslations('contact');
     const locale = useLocale();
     const pathname = usePathname();
+    const intlPathname = useIntlPathname();
     const { isAuthenticated } = useAuth();
 
     // Function to get the path without locale prefix
@@ -98,8 +105,9 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                             position: 'relative',
                             zIndex: 10
                         }}>
-                            <Link
-                                href={`/th${getPathWithoutLocale()}`}
+                            <IntlLink
+                                href={intlPathname}
+                                locale="th"
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
@@ -117,9 +125,10 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                                 }}
                             >
                                 TH
-                            </Link>
-                            <Link
-                                href={`/en${getPathWithoutLocale()}`}
+                            </IntlLink>
+                            <IntlLink
+                                href={intlPathname}
+                                locale="en"
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
@@ -137,7 +146,7 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                                 }}
                             >
                                 EN
-                            </Link>
+                            </IntlLink>
                         </div>
 
                         {isAuthenticated ? (

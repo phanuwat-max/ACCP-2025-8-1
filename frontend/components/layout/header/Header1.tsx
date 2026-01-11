@@ -5,11 +5,21 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import UserProfileDropdown from './UserProfileDropdown';
+import { Link as IntlLink, usePathname as useIntlPathname } from '@/i18n/routing';
 
-export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSearch, handleSearch }: any) {
+interface HeaderProps {
+    scroll: boolean;
+    isMobileMenu: boolean;
+    handleMobileMenu: () => void;
+    isSearch: boolean;
+    handleSearch: () => void;
+}
+
+export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSearch, handleSearch }: HeaderProps) {
     const t = useTranslations('common');
     const locale = useLocale();
     const pathname = usePathname();
+    const intlPathname = useIntlPathname();
     const { isAuthenticated } = useAuth();
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -178,8 +188,9 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
                                     <div className="btn-area" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                         {/* Language Switcher */}
                                         <div className="d-none d-lg-flex" style={{ alignItems: 'center', gap: '4px' }}>
-                                            <Link
-                                                href={`/th${getPathWithoutLocale()}`}
+                                            <IntlLink
+                                                href={intlPathname}
+                                                locale="th"
                                                 style={{
                                                     display: 'flex',
                                                     alignItems: 'center',
@@ -197,9 +208,10 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
                                                 }}
                                             >
                                                 TH
-                                            </Link>
-                                            <Link
-                                                href={`/en${getPathWithoutLocale()}`}
+                                            </IntlLink>
+                                            <IntlLink
+                                                href={intlPathname}
+                                                locale="en"
                                                 style={{
                                                     display: 'flex',
                                                     alignItems: 'center',
@@ -217,7 +229,7 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSear
                                                 }}
                                             >
                                                 EN
-                                            </Link>
+                                            </IntlLink>
                                         </div>
 
                                         {isAuthenticated ? (
